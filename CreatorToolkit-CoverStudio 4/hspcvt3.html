@@ -1,0 +1,1923 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Creator Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+  
+  
+  
+  
+  
+  <div style="display: flex; flex-direction: column; justify-content: space-between; min-height: 95vh; box-sizing: border-box; padding: 10px;">
+
+
+
+
+
+
+<div class="brand" style="margin-top: 20px; padding-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; box-sizing: border-box; clear: both;">
+    <img class="brand-mark" src="icons/icon.svg" alt="" width="30" height="30">
+    <p class="brand-name" style="margin: 0; font-family: sans-serif; font-size: 18px; font-weight: bold; color: #ffffff;">Creator Toolkit V3.1</p>
+</div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+<main class="console" data-auth="loading" data-boot="running" style="display:none;">
+      <header class="app-header">
+    
+	
+	
+	
+	
+        <div class="header-aside">
+          <div
+            id="connection-badge"
+            class="connection-badge"
+            role="status"
+            aria-live="polite"
+            aria-label="Suno not connected"
+          >
+            <span
+              id="connection-state-icon"
+              class="connection-state-icon"
+              data-state="disconnected"
+              aria-hidden="true"
+            >
+              <svg class="state-icon state-icon-connected" viewBox="0 0 24 24">
+                <path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"></path>
+                <path d="M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"></path>
+              </svg>
+              <svg class="state-icon state-icon-disconnected" viewBox="0 0 24 24">
+                <path d="m9 17-1.1 1.1A5 5 0 0 1 .8 11l2-2A5 5 0 0 1 7 7.5"></path>
+                <path d="m15 7 1.1-1.1A5 5 0 0 1 23.2 13l-2 2a5 5 0 0 1-4.2 1.5"></path>
+                <path d="m8 12 4 4"></path>
+                <path d="m2 2 20 20"></path>
+              </svg>
+            </span>
+            <span id="connection-label">Not connected</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Filled only when Chrome reports a newer published version. The store
+           address is set at runtime, never written into the markup. -->
+      <p id="update-notice" class="environment-note update-notice" role="status" hidden>
+        <span id="update-notice-text"></span>
+        <a
+          id="update-notice-link"
+          target="_blank"
+          rel="noreferrer"
+        >Open in the Chrome Web Store</a>
+      </p>
+
+      <div class="console-loading" role="status" aria-live="polite">
+        <span class="console-loading-spark" aria-hidden="true"></span>
+        <p id="console-loading-label" class="console-loading-label">Starting Creator Toolkit…</p>
+        <p id="startup-message" class="startup-message" hidden></p>
+        <div id="startup-actions" class="startup-actions" hidden>
+          <button
+            id="startup-retry"
+            class="button button-primary"
+            type="button"
+            hidden
+          >Try again</button>
+          <button
+            id="startup-continue"
+            class="button button-quiet"
+            type="button"
+            hidden
+          >Continue anyway</button>
+        </div>
+      </div>
+
+      <section class="module session-module" aria-labelledby="session-heading">
+        <img class="connection-mark" src="icons/icon.svg" alt="">
+        <div class="connection-copy">
+          <h1 id="session-heading">Connect to Suno <a class="help-link" href="https://chunks.md/docs/suno-toolkit/getting-started" target="_blank" rel="noreferrer" aria-label="Getting started: open the guide on chunks.md" title="Getting started: open the guide on chunks.md">?</a></h1>
+          <p class="lede">
+            Use the Suno account already signed into this Chrome profile.
+          </p>
+        </div>
+        <p id="session-state" class="session-state">Suno session not connected</p>
+        <button id="check-session" class="button button-primary" type="button">
+          Check browser session
+        </button>
+      </section>
+
+      <nav class="workspace-tabs" role="tablist" aria-label="Suno tools">
+        <button
+          id="upload-tab"
+          class="workspace-tab"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          aria-controls="upload-panel"
+          data-workspace-tab="upload"
+        >
+          <span class="workspace-tab-icon" data-section-icon="upload" aria-hidden="true"></span>
+          <span>Upload</span>
+        </button>
+        <button
+          id="download-tab"
+          class="workspace-tab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="download-panel"
+          data-workspace-tab="download"
+          tabindex="-1"
+        >
+          <span class="workspace-tab-icon" data-section-icon="download" aria-hidden="true"></span>
+          <span>Download</span>
+        </button>
+   
+        <button
+          id="search-tab"
+          class="workspace-tab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="search-panel"
+          data-workspace-tab="search"
+          tabindex="-1"
+        >
+          <span class="workspace-tab-icon" data-section-icon="search" aria-hidden="true"></span>
+          <span>Style</span>
+        </button>
+        <button
+          id="models-tab"
+          class="workspace-tab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="models-panel"
+          data-workspace-tab="models"
+          tabindex="-1"
+        >
+          <span class="workspace-tab-icon" data-section-icon="models" aria-hidden="true"></span>
+          <span>Models</span>
+        </button>
+    
+        <button
+          id="delete-tab"
+          class="workspace-tab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="delete-panel"
+          data-workspace-tab="delete"
+          tabindex="-1"
+        >
+          <span class="workspace-tab-icon" data-section-icon="delete" aria-hidden="true"></span>
+          <span>Delete</span>
+        </button>
+  
+       
+      
+   
+      </nav>
+
+      <div
+        id="upload-panel"
+        class="workspace-panel"
+        role="tabpanel"
+        aria-labelledby="upload-tab"
+        data-workspace-panel="upload"
+      >
+        <div
+          id="environment-notice"
+          class="environment-notice"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></div>
+
+        <section class="module profile-module" aria-labelledby="profile-heading">
+        <div class="module-heading">
+          <h2 id="profile-heading">
+            <span class="section-icon" data-section-icon="profile" aria-hidden="true"></span>
+            Audio Settings <span class="hint" tabindex="0" role="note" aria-label="How your audio is altered before upload. Off uploads the original; the other profiles disguise it and upload it whole." title="How your audio is altered before upload. Off uploads the original; the other profiles disguise it and upload it whole.">?</span>
+          </h2>
+          <a class="help-link" href="https://chunks.md/docs/suno-toolkit/upload" target="_blank" rel="noreferrer" aria-label="How to use the Upload tab: open its guide on chunks.md" title="How to use the Upload tab: open its guide on chunks.md">?</a>
+        </div>
+        <p class="profile-description">
+          NOTE: Keep this setting OFF if you want to upload your original audio without making any changes to it. Only enable the other settings if the upload continues to fail after 10 or more retries.
+        </p>
+
+        <div id="preset-grid" class="preset-grid" role="radiogroup" aria-label="Anonymization preset">
+          <button class="preset" type="button" data-preset="off" role="radio">
+            <span class="preset-icon" data-preset-icon="off" aria-hidden="true"></span>
+            <span>Off</span>
+            <small>Original Audio</small>
+          </button>
+          <button class="preset" type="button" data-preset="subtle" role="radio">
+            <span class="preset-icon" data-preset-icon="subtle" aria-hidden="true"></span>
+            <span>Mild</span>
+            <small>Slight Changes</small>
+          </button>
+          <button class="preset" type="button" data-preset="moderate" role="radio">
+            <span class="preset-icon" data-preset-icon="moderate" aria-hidden="true"></span>
+            <span>Standard</span>
+            <small>Medium Changes</small>
+          </button>
+          <button class="preset" type="button" data-preset="aggressive" role="radio">
+            <span class="preset-icon" data-preset-icon="aggressive" aria-hidden="true"></span>
+            <span>Intense</span>
+            <small>Heavy Changes</small>
+          </button>
+          <button class="preset" type="button" data-preset="instrumental" role="radio">
+            <span class="preset-icon" data-preset-icon="instrumental" aria-hidden="true"></span>
+            <span>Instrumental</span>
+            <small>Vocal removal</small>
+          </button>
+        </div>
+        <p id="preset-description" class="profile-description"></p>
+
+        <div id="split-settings" class="split-settings" hidden>
+          <span class="kicker">Upload</span>
+          <label class="switch-field" for="split-variable">
+            <input id="split-variable" type="checkbox">
+            <span>Optimized</span>
+          </label>
+          <p class="field-note split-premier-note">
+            Check the Optimized option for better experience. Uncheck if it doesn't work for you.
+          </p>
+          <details class="split-advanced">
+            <summary>
+              <span>Advanced options</span>
+              <svg class="summary-mark" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m6 9 6 6 6-6"></path>
+              </svg>
+            </summary>
+            <label class="field field-compact" for="split-seconds">
+              <span class="field-label">Part length (sec)</span>
+              <input
+                id="split-seconds"
+                class="field-input"
+                type="number"
+                min="1"
+                max="3600"
+                step="1"
+                inputmode="numeric"
+              >
+            </label>
+          </details>
+          <p id="split-hint" class="field-note"></p>
+        </div>
+
+        <details id="advanced-panel" class="advanced-panel">
+          <summary>
+            <span class="advanced-title">
+              <span class="advanced-section-icon" data-mark="settingsBare" aria-hidden="true"></span>
+              <strong>Advanced settings</strong>
+            </span>
+            <svg class="summary-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+          </summary>
+          <div class="advanced-intro">
+            <p id="advanced-context">Editing defaults for newly added files.</p>
+            <p>Changes are local. Processed files leave the panel only during upload.</p>
+          </div>
+          <div id="advanced-controls" class="advanced-controls"></div>
+        </details>
+        </section>
+
+        <section class="module queue-module" aria-labelledby="queue-heading">
+        <div class="module-heading queue-heading">
+          <h2 id="queue-heading">
+            <span class="section-icon" data-section-icon="queue" aria-hidden="true"></span>
+            Audio File <span class="hint" tabindex="0" role="note" aria-label="Tracks waiting to be processed and uploaded. One track is processed at a time; keep this panel open while it runs." title="Tracks waiting to be processed and uploaded. One track is processed at a time; keep this panel open while it runs.">?</span>
+          </h2>
+        </div>
+
+        <label id="dropzone" class="dropzone" for="audio-files">
+          <span class="dropzone-cross" aria-hidden="true"></span>
+          <span>
+            <strong>Select Audio</strong>
+            <small>Please select an audio on your device.</small>
+          </span>
+          <input
+            id="audio-files"
+            type="file"
+            accept=".mp3,.wav,.m4a,.flac,.ogg,.aac,.webm,audio/*"
+            multiple
+          >
+        </label>
+
+        <div class="queue-meta">
+          <p id="queue-summary"></p>
+          <button id="clear-finished" class="text-button" type="button" disabled>
+            Clear finished
+          </button>
+        </div>
+
+        <div id="queue-empty" class="queue-empty">
+          <span class="section-icon" data-section-icon="queue" aria-hidden="true"></span>
+          <p>Please Select Audio first then click START.</p>
+        </div>
+        <ol id="queue-list" class="queue-list" aria-label="Audio upload queue"></ol>
+
+        <div class="transport-controls">
+          <button id="run-queue" class="button button-primary" type="button" disabled>
+            Upload 0 tracks in turn
+          </button>
+          <button id="cancel-queue" class="button button-danger" type="button" hidden>
+            Pause
+          </button>
+        </div>
+        </section>
+      </div>
+
+      <section
+        id="download-panel"
+        class="workspace-panel download-panel"
+        role="tabpanel"
+        aria-labelledby="download-tab"
+        data-workspace-panel="download"
+        hidden
+      >
+        <section class="module" aria-labelledby="download-heading">
+          <div class="module-heading">
+            <h2 id="download-heading">
+              <span class="section-icon" data-section-icon="download" aria-hidden="true"></span>
+              Bulk download <span class="hint" tabindex="0" role="note" aria-label="Packs every song in a workspace, or your whole account, into one zip." title="Packs every song in a workspace, or your whole account, into one zip.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/download" target="_blank" rel="noreferrer" aria-label="How to use the Download tab: open its guide on chunks.md" title="How to use the Download tab: open its guide on chunks.md">?</a>
+          </div>
+          <p class="profile-description">
+            Pack every song in one workspace, or your whole account, into a
+            single zip. Keep the side panel open while it runs.
+          </p>
+
+          <label class="field" for="download-workspace">
+            <span class="field-label">Workspace <span class="hint" tabindex="0" role="note" aria-label="Which Suno workspace this applies to." title="Which Suno workspace this applies to.">?</span>
+            <select id="download-workspace" class="field-input" disabled>
+              <option value="">Connect to Suno to list your workspaces</option>
+            </select>
+          </label>
+
+          <div class="generate-row">
+            <button id="select-all-download-songs" class="button button-quiet" type="button" disabled>
+              Select all
+            </button>
+            <button id="clear-download-songs" class="button button-quiet" type="button" disabled>
+              Clear selection
+            </button>
+          </div>
+          <label class="field" for="download-song-filter">
+            <span class="field-label">Find a song <span class="hint" tabindex="0" role="note" aria-label="Narrows the list by song title or style tag. Select all takes only what the filter is showing; a song ticked and then hidden stays ticked." title="Narrows the list by song title or style tag. Select all takes only what the filter is showing; a song ticked and then hidden stays ticked.">?</span>
+            <input
+              id="download-song-filter"
+              class="field-input"
+              type="search"
+              placeholder="Title or style tag"
+              autocomplete="off"
+              disabled
+            >
+          </label>
+          <p id="download-song-status" class="field-note"></p>
+          <ul id="download-song-list" class="delete-list delete-list-short" aria-labelledby="download-heading"></ul>
+
+          <div class="generate-row">
+            <label class="field field-compact" for="download-method">
+              <span class="field-label">Method <span class="hint" tabindex="0" role="note" aria-label="An alternate way of downloading that does not count against any quota." title="An alternate way of downloading that does not count against any quota.">?</span>
+              <select id="download-method" class="field-input">
+                <option value="direct">Direct file</option>
+                <option value="encrypted">Alternate</option>
+              </select>
+            </label>
+            <label class="field field-compact" for="download-format">
+              <span class="field-label">Format</span>
+              <select id="download-format" class="field-input">
+                <option value="wav">WAV (lossless)</option>
+                <option value="mp3">MP3</option>
+                <option value="m4a" hidden>M4A (as served)</option>
+              </select>
+            </label>
+          </div>
+          <p id="download-method-note" class="field-note"></p>
+
+          <div class="generate-row">
+            <button id="refresh-workspaces" class="button button-quiet" type="button">
+              Refresh list
+            </button>
+          </div>
+          <p id="download-note" class="field-note"></p>
+
+          <div class="transport-controls">
+            <button id="run-download" class="button button-primary" type="button" disabled>
+              Download workspace
+            </button>
+            <button id="cancel-download" class="button button-quiet" type="button" hidden>
+              Stop
+            </button>
+          </div>
+          <div id="download-band" class="stage-band" hidden></div>
+
+          <p id="download-status" class="session-state" role="status" aria-live="polite"></p>
+          <ul id="download-report" class="download-report"></ul>
+        </section>
+      </section>
+
+      <section
+        id="generate-panel"
+        class="workspace-panel"
+        role="tabpanel"
+        aria-labelledby="generate-tab"
+        data-workspace-panel="generate"
+        hidden
+      >
+        <section class="module" aria-labelledby="generate-heading">
+          <div class="module-heading">
+            <h2 id="generate-heading">
+              <span class="section-icon" data-section-icon="generate" aria-hidden="true"></span>
+              Bulk generate variations <span class="hint" tabindex="0" role="note" aria-label="Generates several songs at once, optionally stepping a slider across the run so each take differs." title="Generates several songs at once, optionally stepping a slider across the run so each take differs.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/generate" target="_blank" rel="noreferrer" aria-label="How to use the Generate tab: open its guide on chunks.md" title="How to use the Generate tab: open its guide on chunks.md">?</a>
+          </div>
+
+          <!-- One form, one home in the DOM. It is MOVED into whichever
+               panel is showing rather than duplicated, so the Songwriter
+               cannot drift from the Generate tab: they are the same
+               controls, the same values and the same results. Only one
+               workspace panel is ever visible, so there is never a
+               conflict over where it lives. -->
+          <div id="generate-form">
+
+          <p class="profile-description">
+            One request returns two songs, so a run of ten is five requests. A
+            slider set to vary steps once per request, that is once per two songs.
+          </p>
+
+          <label class="field" for="generate-project">
+            <span class="field-label">Workspace</span>
+            <select id="generate-project" class="field-input" disabled>
+              <option value="">Connect to Suno to choose a workspace</option>
+            </select>
+          </label>
+
+          <label class="field" for="generate-model">
+            <span class="field-label">Model</span>
+            <select id="generate-model" class="field-input">
+              <optgroup label="Suno models" id="generate-model-versions"></optgroup>
+              <optgroup label="Custom models" id="generate-model-customs" hidden></optgroup>
+              <optgroup label="Voices" id="generate-model-personas" hidden></optgroup>
+            </select>
+            <button id="refresh-models" class="button button-quiet" type="button">
+              Refresh models
+            </button>
+            <p id="model-status" class="field-note" hidden></p>
+          </label>
+
+          <label class="field" for="generate-lyrics">
+            <span class="field-label">Lyrics</span>
+            <textarea
+              id="generate-lyrics"
+              class="field-input"
+              rows="6"
+              placeholder="[Verse]&#10;Write or paste lyrics here"
+            ></textarea>
+            <p class="field-note">Preserved but not sent when Instrumental is on.</p>
+          </label>
+
+          <label class="field" for="generate-styles">
+            <span class="field-label">Styles</span>
+            <textarea
+              id="generate-styles"
+              class="field-input"
+              rows="2"
+              placeholder="ambient, soft piano, slow"
+            ></textarea>
+            <p class="field-error" data-error-for="styles" hidden></p>
+            <button id="improve-styles" class="button button-quiet" type="button">
+              Improve with Suno's top styles
+              <span class="hint" tabindex="0" role="note" aria-label="Reads the most upvoted public songs matching what is in the Styles box and adds the style words they share. Suno's own words, from songs that earned their upvotes — nothing is written by a language model." title="Reads the most upvoted public songs matching what is in the Styles box and adds the style words they share. Suno's own words, from songs that earned their upvotes — nothing is written by a language model.">?</span>
+            </button>
+            <p id="improve-styles-status" class="session-state" role="status" aria-live="polite"></p>
+          </label>
+
+          <label class="field" for="generate-exclude">
+            <span class="field-label">Exclude styles</span>
+            <input id="generate-exclude" class="field-input" type="text" placeholder="Optional">
+          </label>
+
+          <label class="field" for="generate-reference">
+            <span class="field-label">Reference songs <span class="hint" tabindex="0" role="note" aria-label="Songs to base the new ones on. One Suno song link or ID per line, or separated by commas, up to 9. Accepts suno.com/song/... links, suno.com/s/... share links, and bare IDs. Naming one turns every take into a cover of it and switches on the Audio influence slider below." title="Songs to base the new ones on. One Suno song link or ID per line, or separated by commas, up to 9. Accepts suno.com/song/... links, suno.com/s/... share links, and bare IDs. Naming one turns every take into a cover of it and switches on the Audio influence slider below.">?</span>
+            <textarea
+              id="generate-reference"
+              class="field-input"
+              rows="2"
+              placeholder="One per line or comma-separated: links or IDs, up to 9"
+            ></textarea>
+            <button id="pick-reference" class="button button-quiet" type="button">
+              Pick from library
+            </button>
+            <p id="reference-status" class="field-note" hidden></p>
+            <ol id="reference-picker" class="reference-picker" hidden></ol>
+            <p class="field-error" data-error-for="reference" hidden></p>
+          </label>
+
+          <label class="field" for="generate-title">
+            <span class="field-label">Title prefix</span>
+            <input id="generate-title" class="field-input" type="text" placeholder="Optional">
+          </label>
+
+          <label class="field" for="generate-note">
+            <span class="field-label">Note</span>
+            <input id="generate-note" class="field-input" type="text" placeholder="e.g. Energetic Run">
+          </label>
+
+          <label class="field" for="generate-title-template">
+            <span class="field-label">Title template <span class="hint" tabindex="0" role="note" aria-label="How each generated song is named. {code} stamps the slider settings on every take. S78W20A65 means Style influence 78, Weirdness 20, Audio influence 65, so a run at stepped settings is self-describing. {S} {W} {A} give one each, {R} numbers the reference song, {n} the take. See the placeholder list below." title="How each generated song is named. {code} stamps the slider settings on every take. S78W20A65 means Style influence 78, Weirdness 20, Audio influence 65, so a run at stepped settings is self-describing. {S} {W} {A} give one each, {R} numbers the reference song, {n} the take. See the placeholder list below.">?</span>
+            <input id="generate-title-template" class="field-input" type="text">
+            <details class="template-help">
+              <summary>
+                <span>What can go in a title</span>
+                <svg class="summary-mark" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </summary>
+              <dl>
+                <dt><code>{title}</code></dt>
+                <dd>The title prefix you typed above.</dd>
+                <dt><code>{note}</code></dt>
+                <dd>Your own note for this run, like "Energetic Run".</dd>
+                <dt><code>{styles}</code></dt>
+                <dd>The styles you entered.</dd>
+                <dt><code>{code}</code></dt>
+                <dd>The whole slider set as one code, like <code>S70W20A0</code>.</dd>
+                <dt><code>{S}</code> <code>{W}</code> <code>{A}</code></dt>
+                <dd>Style influence, weirdness, and audio influence on their own.</dd>
+                <dt><code>{R}</code></dt>
+                <dd>Which reference song the take used, when the run has several.</dd>
+                <dt><code>{n}</code></dt>
+                <dd>The take number, counting from 1.</dd>
+              </dl>
+              <p>Anything with nothing behind it disappears, and so do the spaces around it.</p>
+            </details>
+          </label>
+
+          <div class="generate-row">
+            <label class="field field-compact" for="generate-count">
+              <span class="field-label">Songs</span>
+              <input
+                id="generate-count"
+                class="field-input"
+                type="number"
+                min="2"
+                max="200"
+                step="2"
+                value="10"
+              >
+              <p class="field-error" data-error-for="songs" hidden></p>
+            </label>
+            <label class="switch-field" for="generate-instrumental">
+              <input id="generate-instrumental" type="checkbox">
+              <span>Instrumental</span>
+            </label>
+            <label class="switch-field" for="generate-max-mode">
+              <input id="generate-max-mode" type="checkbox" checked>
+              <span>Max Mode <span class="hint" tabindex="0" role="note" aria-label="Suno uses more compute to keep the song consistent all the way through. Costs twice the credits per song. Offered on Pro and Premier plans." title="Suno uses more compute to keep the song consistent all the way through. Costs twice the credits per song. Offered on Pro and Premier plans.">?</span>
+            </label>
+          </div>
+          <p id="generate-max-mode-note" class="field-note" hidden></p>
+
+          <div class="generate-row">
+            <label class="field field-compact" for="generate-variety">
+              <span class="field-label">Variety <span class="hint" tabindex="0" role="note" aria-label="How far the takes may drift from your style prompt. Off keeps the exact style; Max may differ a lot from it. Offered on Suno v6 versions." title="How far the takes may drift from your style prompt. Off keeps the exact style; Max may differ a lot from it. Offered on Suno v6 versions.">i</span></span>
+              <select id="generate-variety" class="field-input">
+                <option value="0">Off · Exact style</option>
+                <option value="1" selected>Normal · Balanced variety</option>
+                <option value="2">High · Distinct styles</option>
+                <option value="3">Extra · Bold exploration</option>
+                <option value="4">Max · Unreasonably varied</option>
+              </select>
+            </label>
+            <label class="switch-field" for="generate-personalize">
+              <input id="generate-personalize" type="checkbox">
+              <span>Personalize <span class="hint" tabindex="0" role="note" aria-label="Makes Variety lean toward your own taste, as Suno has learned it from your listening. Needs Variety above Off. Offered on Suno v6 versions." title="Makes Variety lean toward your own taste, as Suno has learned it from your listening. Needs Variety above Off. Offered on Suno v6 versions.">?</span>
+            </label>
+          </div>
+          <p id="generate-variety-note" class="field-note" hidden></p>
+
+          <fieldset class="sweep-axis" data-axis="weirdness">
+            <legend>Weirdness</legend>
+            <label class="switch-field" for="generate-weirdness-vary">
+              <input id="generate-weirdness-vary" type="checkbox" data-axis-vary="weirdness">
+              <span>Vary across the run</span>
+            </label>
+            <div class="generate-row">
+              <label class="field field-compact" for="generate-weirdness-start">
+                <span class="field-label">Start</span>
+                <input
+                  id="generate-weirdness-start"
+                  class="field-input"
+                  type="number"
+                  min="0"
+                  max="100"
+                  value="50"
+                  data-axis-start="weirdness"
+                >
+              </label>
+              <label class="field field-compact" for="generate-weirdness-step">
+                <span class="field-label">Step per request</span>
+                <input
+                  id="generate-weirdness-step"
+                  class="field-input"
+                  type="number"
+                  min="-100"
+                  max="100"
+                  value="10"
+                  data-axis-step="weirdness"
+                  disabled
+                >
+              </label>
+            </div>
+            <p class="field-error" data-error-for="weirdness" hidden></p>
+          </fieldset>
+
+          <fieldset class="sweep-axis" data-axis="styleInfluence">
+            <legend>Style influence</legend>
+            <label class="switch-field" for="generate-style-vary">
+              <input id="generate-style-vary" type="checkbox" data-axis-vary="styleInfluence">
+              <span>Vary across the run</span>
+            </label>
+            <div class="generate-row">
+              <label class="field field-compact" for="generate-style-start">
+                <span class="field-label">Start</span>
+                <input
+                  id="generate-style-start"
+                  class="field-input"
+                  type="number"
+                  min="0"
+                  max="100"
+                  value="50"
+                  data-axis-start="styleInfluence"
+                >
+              </label>
+              <label class="field field-compact" for="generate-style-step">
+                <span class="field-label">Step per request</span>
+                <input
+                  id="generate-style-step"
+                  class="field-input"
+                  type="number"
+                  min="-100"
+                  max="100"
+                  value="10"
+                  data-axis-step="styleInfluence"
+                  disabled
+                >
+              </label>
+            </div>
+            <p class="field-error" data-error-for="styleInfluence" hidden></p>
+          </fieldset>
+
+          <fieldset class="sweep-axis" data-axis="audioInfluence" disabled>
+            <legend>Audio influence</legend>
+            <label class="switch-field" for="generate-audio-vary">
+              <input id="generate-audio-vary" type="checkbox" data-axis-vary="audioInfluence">
+              <span>Vary across the run</span>
+            </label>
+            <div class="generate-row">
+              <label class="field field-compact" for="generate-audio-start">
+                <span class="field-label">Start</span>
+                <input
+                  id="generate-audio-start"
+                  class="field-input"
+                  type="number"
+                  min="0"
+                  max="100"
+                  value="25"
+                  data-axis-start="audioInfluence"
+                >
+              </label>
+              <label class="field field-compact" for="generate-audio-step">
+                <span class="field-label">Step per request</span>
+                <input
+                  id="generate-audio-step"
+                  class="field-input"
+                  type="number"
+                  min="-100"
+                  max="100"
+                  value="10"
+                  data-axis-step="audioInfluence"
+                  disabled
+                >
+              </label>
+            </div>
+            <small class="field-note">
+              Needs a reference song above.
+            </small>
+          </fieldset>
+
+          <p id="generate-preview" class="profile-description"></p>
+
+          <div class="transport-controls">
+            <button id="run-generate" class="button button-primary" type="button">
+              Generate 10 songs
+            </button>
+            <button id="cancel-generate" class="button button-danger" type="button" hidden>
+              Stop
+            </button>
+          </div>
+          <div id="generate-meter" class="work-meter" hidden>
+            <progress max="1" value="0" aria-label="Generation progress"></progress>
+            <p class="work-meter-label"></p>
+          </div>
+
+          <section id="generate-results-panel" class="generate-results" hidden>
+            <div class="module-heading">
+              <h2 id="generate-results-heading">
+                <span class="section-icon" data-section-icon="queue" aria-hidden="true"></span>
+                Songs
+              </h2>
+            </div>
+            <p id="generate-results-summary" class="profile-description"></p>
+            <ol
+              id="generate-results"
+              class="generate-song-list"
+              aria-labelledby="generate-results-heading"
+            ></ol>
+          </section>
+          </div>
+        </section>
+      </section>
+
+      <div
+        id="models-panel"
+        class="workspace-panel"
+        role="tabpanel"
+        aria-labelledby="models-tab"
+        data-workspace-panel="models"
+        hidden
+      >
+        <section class="module" aria-labelledby="models-heading">
+          <div class="module-heading">
+            <h2 id="models-heading">
+              <span class="section-icon" data-section-icon="models" aria-hidden="true"></span>
+              Custom models <span class="hint" tabindex="0" role="note" aria-label="Train Suno on songs this account already owns, then generate with the result from the Model control." title="Train Suno on songs this account already owns, then generate with the result from the Model control.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/models" target="_blank" rel="noreferrer" aria-label="How to use the Models tab: open its guide on chunks.md" title="How to use the Models tab: open its guide on chunks.md">?</a>
+          </div>
+          <p class="profile-description">
+            Train Suno on songs you already own, then pick the result in the
+            Model control on Generate. Suno needs at least 6 songs and charges
+            credits for each model it trains.
+          </p>
+
+          <p id="models-state" class="session-state">Connect to Suno to see your models.</p>
+          <ul id="models-list" class="model-list" aria-labelledby="models-heading"></ul>
+          <button id="refresh-custom-models" class="button button-quiet" type="button">
+            Refresh
+          </button>
+          <p id="models-refresh-note" class="field-note" hidden></p>
+        </section>
+
+        <section class="module" aria-labelledby="model-create-heading">
+          <div class="module-heading">
+            <h2 id="model-create-heading">
+              <span class="section-icon" data-section-icon="generate" aria-hidden="true"></span>
+              Train a new model
+            </h2>
+          </div>
+
+          <label class="field" for="model-name">
+            <span class="field-label">Name</span>
+            <input
+              id="model-name"
+              class="field-input"
+              type="text"
+              maxlength="16"
+              autocomplete="off"
+              placeholder="Layton Style"
+            >
+            <p class="field-note">Up to 16 characters, the same limit Suno sets.</p>
+          </label>
+
+          <label class="field" for="model-clip-ids">
+            <span class="field-label">Songs by link or ID</span>
+            <textarea
+              id="model-clip-ids"
+              class="field-input"
+              rows="3"
+              placeholder="Suno song links or IDs, one per line"
+            ></textarea>
+            <p id="model-clip-id-status" class="field-note" hidden></p>
+          </label>
+
+          <label class="field" for="model-source">
+            <span class="field-label">Or pick from a workspace</span>
+            <select id="model-source" class="field-input">
+              <option value="">Connect to Suno to list your workspaces</option>
+            </select>
+            <button id="load-model-clips" class="button button-quiet" type="button">
+              Load songs
+            </button>
+            <p id="model-clip-status" class="field-note" hidden></p>
+            <ol id="model-clip-picker" class="reference-picker" hidden></ol>
+          </label>
+
+          <p id="model-draft-note" class="field-note"></p>
+          <p id="model-create-state" class="session-state" hidden></p>
+          <button id="create-model" class="button button-primary" type="button" disabled>
+            Train model
+          </button>
+        </section>
+      </div>
+
+      <section
+        id="songwriter-panel"
+        class="workspace-panel"
+        role="tabpanel"
+        aria-labelledby="songwriter-tab"
+        data-workspace-panel="songwriter"
+        hidden
+      >
+        <section class="module" aria-labelledby="songwriter-heading">
+          <div class="module-heading">
+            <h2 id="songwriter-heading">
+              <span class="section-icon" data-section-icon="songwriter" aria-hidden="true"></span>
+              Uncensored Songwriter <span class="hint" tabindex="0" role="note" aria-label="Describe a song and your own language model writes it, then generates it here. The controls below are the Generate tab's own." title="Describe a song and your own language model writes it, then generates it here. The controls below are the Generate tab's own.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/songwriter" target="_blank" rel="noreferrer" aria-label="How to use the Songwriter tab: open its guide on chunks.md" title="How to use the Songwriter tab: open its guide on chunks.md">?</a>
+          </div>
+          <p class="profile-description">
+            Pick a model, describe a song, and it writes the title, styles and
+            lyrics. Say what to change, then generate it below.
+          </p>
+
+          <details id="songwriter-setup" class="songwriter-setup">
+            <summary>Language model <span id="songwriter-setup-state" class="songwriter-setup-state"></span> <span class="hint" tabindex="0" role="note" aria-label="The LLM that writes the lyrics and settings for your song. Either the built-in model on this computer's graphics card, or any OpenAI-compatible endpoint: OpenAI, OpenRouter, or a local server. It never touches Suno." title="The LLM that writes the lyrics and settings for your song. Either the built-in model on this computer's graphics card, or any OpenAI-compatible endpoint: OpenAI, OpenRouter, or a local server. It never touches Suno.">?</span></summary>
+            <label class="field" for="songwriter-source">
+              <span class="field-label">Model source <span class="hint" tabindex="0" role="note" aria-label="Built-in: an uncensored Qwen 3.5 model that runs on this computer's graphics card inside this browser, downloaded once (about 6 GB) and kept; nothing you write leaves your machine. Your own endpoint: any OpenAI-compatible server with your key. The controls below apply to whichever is chosen." title="Built-in: an uncensored Qwen 3.5 model that runs on this computer's graphics card inside this browser, downloaded once (about 6 GB) and kept; nothing you write leaves your machine. Your own endpoint: any OpenAI-compatible server with your key. The controls below apply to whichever is chosen.">?</span>
+              <select id="songwriter-source" class="field-input">
+                <option value="endpoint">Your own OpenAI-compatible endpoint</option>
+                <option value="local">Built-in uncensored Qwen 3.5, on this computer</option>
+              </select>
+            </label>
+
+            <div id="songwriter-local" class="songwriter-local" data-state="idle" hidden>
+              <ul id="songwriter-local-checks" class="songwriter-checks" aria-label="What this computer offers the built-in model"></ul>
+              <p id="songwriter-local-verdict" class="field-note"></p>
+              <p id="songwriter-local-warning" class="environment-note" data-severity="warning" hidden></p>
+              <div class="generate-row">
+                <button id="songwriter-local-use" class="button button-primary" type="button">
+                  Download and use it
+                </button>
+              </div>
+              <div id="songwriter-local-band" class="stage-band" hidden></div>
+              <p id="songwriter-local-status" class="session-state" role="status" aria-live="polite"></p>
+              <div id="songwriter-local-actions" class="generate-row" hidden>
+                <button id="songwriter-local-unload" class="button button-quiet" type="button">
+                  Unload now
+                </button>
+                <button id="songwriter-local-forget" class="button button-quiet" type="button">
+                  Delete the download
+                </button>
+              </div>
+            </div>
+
+            <div id="songwriter-endpoint-fields" class="songwriter-endpoint-fields">
+            <label class="field" for="songwriter-endpoint">
+              <span class="field-label">OpenAI-compatible base URL</span>
+              <input
+                id="songwriter-endpoint"
+                class="field-input"
+                type="url"
+                inputmode="url"
+                spellcheck="false"
+                autocomplete="off"
+                placeholder="https://api.openai.com/v1"
+              />
+            </label>
+            <label class="field" for="songwriter-key">
+              <span class="field-label">API key <span class="hint" tabindex="0" role="note" aria-label="Your own key for the endpoint above. Stored on this computer only, shown as dots, and never sent anywhere else." title="Your own key for the endpoint above. Stored on this computer only, shown as dots, and never sent anywhere else.">?</span>
+              <input
+                id="songwriter-key"
+                class="field-input"
+                type="password"
+                spellcheck="false"
+                autocomplete="off"
+                placeholder="Stored on this computer only"
+              />
+            </label>
+            <div class="generate-row">
+              <button id="songwriter-connect" class="button button-primary" type="button">
+                Save and list models
+              </button>
+            </div>
+            <label class="field" for="songwriter-model">
+              <span class="field-label">Model</span>
+              <select id="songwriter-model" class="field-input" disabled>
+                <option value="">Save an endpoint to list models</option>
+              </select>
+            </label>
+            </div>
+            <label class="field" for="songwriter-reasoning-effort">
+              <span class="field-label">Reasoning effort <span class="hint" tabindex="0" role="note" aria-label="How much computation the model uses. Extended thinking costs more and is slower, but thinks through complex requests more carefully." title="How much computation the model uses. Extended thinking costs more and is slower, but thinks through complex requests more carefully.">?</span>
+              <select id="songwriter-reasoning-effort" class="field-input">
+                <option value="default">Default</option>
+              </select>
+            </label>
+            <p id="songwriter-setup-status" class="session-state" role="status" aria-live="polite"></p>
+          </details>
+
+          <ol id="songwriter-thread" class="songwriter-thread"></ol>
+
+          <div class="songwriter-toolbar">
+            <label class="field" for="songwriter-mode">
+              <span class="field-label">Mode <span class="hint" tabindex="0" role="note" aria-label="Songwriter: the model answers with a title, styles and lyrics ready to generate. Just a chat: the model answers in plain words and nothing is parsed, for questions, ideas and rewrites. One conversation either way." title="Songwriter: the model answers with a title, styles and lyrics ready to generate. Just a chat: the model answers in plain words and nothing is parsed, for questions, ideas and rewrites. One conversation either way.">?</span>
+              <select id="songwriter-mode" class="field-input">
+                <option value="song">Songwriter</option>
+                <option value="chat">Just a chat</option>
+              </select>
+            </label>
+            <label class="field" for="songwriter-attach">
+              <span class="field-label">Attach <span class="hint" tabindex="0" role="note" aria-label="Pictures (PNG, JPEG, WebP, up to 8 MB) and text files (notes, a lyric sheet) go along with your next message, or drop them onto the message box. A picture needs a model that can see; the built-in one can." title="Pictures (PNG, JPEG, WebP, up to 8 MB) and text files (notes, a lyric sheet) go along with your next message, or drop them onto the message box. A picture needs a model that can see; the built-in one can.">?</span>
+              <input
+                id="songwriter-attach"
+                class="field-input songwriter-attach"
+                type="file"
+                multiple
+                accept="image/png,image/jpeg,image/webp,text/plain,text/markdown,.txt,.md,.lrc,.json,.csv,.srt"
+              />
+            </label>
+          </div>
+          <ul id="songwriter-attachments" class="songwriter-attachments" aria-label="Attachments for the next message"></ul>
+
+          <label id="songwriter-compose" class="field" for="songwriter-input">
+            <span class="field-label" id="songwriter-input-label">Describe the song</span>
+            <textarea
+              id="songwriter-input"
+              class="field-input songwriter-input"
+              rows="3"
+            ></textarea>
+          </label>
+          <p id="songwriter-reference" class="field-note"></p>
+
+          <div class="transport-controls">
+            <button id="songwriter-send" class="button button-primary" type="button" disabled>
+              Write it
+            </button>
+            <button id="songwriter-reset" class="button button-quiet" type="button">
+              Start over
+            </button>
+          </div>
+          <p id="songwriter-status" class="session-state" role="status" aria-live="polite"></p>
+
+          <details id="songwriter-song" class="songwriter-song" open hidden>
+            <summary id="songwriter-song-heading">
+              Generation control
+              <span
+                class="hint"
+                tabindex="0"
+                role="note"
+                aria-label="These are the Generate tab's own controls, shown here. Editing them here edits the run."
+                title="These are the Generate tab's own controls, shown here. Editing them here edits the run."
+              >?</span>
+            </summary>
+
+            <!-- The Generate form is moved in here while this tab is showing.
+                 Not a copy: the same controls, so the two can never drift. -->
+            <div id="songwriter-generate-slot"></div>
+
+          </details>
+        </section>
+      </section>
+
+      <section
+        id="delete-panel"
+        class="workspace-panel delete-panel"
+        role="tabpanel"
+        aria-labelledby="delete-tab"
+        data-workspace-panel="delete"
+        hidden
+      >
+        <section class="module" aria-labelledby="delete-heading">
+          <div class="module-heading">
+            <h2 id="delete-heading">
+              <span class="section-icon" data-section-icon="delete" aria-hidden="true"></span>
+              Mass delete <span class="hint" tabindex="0" role="note" aria-label="Removes songs or whole workspaces from this Suno account. Move to Trash is reversible on suno.com; Delete permanently is not." title="Removes songs or whole workspaces from this Suno account. Move to Trash is reversible on suno.com; Delete permanently is not.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/delete" target="_blank" rel="noreferrer" aria-label="How to use the Delete tab: open its guide on chunks.md" title="How to use the Delete tab: open its guide on chunks.md">?</a>
+          </div>
+          <p class="profile-description">
+            Remove whole workspaces, or open one workspace, filter it, and tick
+            off the songs to go. Removals land in Suno's recycle bin and can be
+            undone. Nothing is sent until you confirm.
+          </p>
+
+          <label class="checkbox-row" for="delete-permanent">
+            <input id="delete-permanent" type="checkbox">
+            <span class="field-label">Then empty the recycle bin <span class="hint" tabindex="0" role="note" aria-label="Trashing is the standard removal and can be undone on suno.com. Tick this and the songs are deleted out of the recycle bin straight afterwards, which cannot be undone from anywhere." title="Trashing is the standard removal and can be undone on suno.com. Tick this and the songs are deleted out of the recycle bin straight afterwards, which cannot be undone from anywhere.">?</span>
+          </label>
+          <p id="delete-mode-note" class="field-note"></p>
+
+          <div class="generate-row">
+            <button id="refresh-delete-workspaces" class="button button-quiet" type="button">
+              Refresh workspaces
+            </button>
+          </div>
+
+          <h3 class="delete-subheading" id="delete-workspace-heading">Workspaces</h3>
+          <p id="delete-workspace-status" class="field-note"></p>
+          <div class="generate-row">
+            <button id="select-empty-workspaces" class="button button-quiet" type="button" disabled>
+              Select empty
+            </button>
+            <button id="clear-delete-workspaces" class="button button-quiet" type="button" disabled>
+              Clear selection
+            </button>
+          </div>
+          <ul id="delete-workspace-list" class="delete-list" aria-labelledby="delete-workspace-heading"></ul>
+          <label class="checkbox-row" for="delete-workspace-songs">
+            <input id="delete-workspace-songs" type="checkbox">
+            <span class="field-label">Remove the songs inside too <span class="hint" tabindex="0" role="note" aria-label="Trashing a workspace leaves its songs in your library. Tick this to remove the songs as well." title="Trashing a workspace leaves its songs in your library. Tick this to remove the songs as well.">?</span>
+          </label>
+          <div class="transport-controls">
+            <button id="run-delete-workspaces" class="button button-danger" type="button" disabled>
+              Delete selected workspaces
+            </button>
+          </div>
+
+          <h3 class="delete-subheading" id="delete-song-heading">Songs</h3>
+          <label class="field" for="delete-song-workspace">
+            <span class="field-label">Workspace</span>
+            <select id="delete-song-workspace" class="field-input" disabled>
+              <option value="">Connect to Suno to list your workspaces</option>
+            </select>
+          </label>
+          <div class="generate-row">
+            <button id="load-delete-songs" class="button button-quiet" type="button" disabled>
+              Load songs
+            </button>
+          </div>
+          <label class="field" for="delete-song-filter">
+            <span class="field-label">Filter <span class="hint" tabindex="0" role="note" aria-label="Narrows the list by song title or style tag. Select all takes only what the filter is showing." title="Narrows the list by song title or style tag. Select all takes only what the filter is showing.">?</span>
+            <input
+              id="delete-song-filter"
+              class="field-input"
+              type="search"
+              placeholder="Title or style tag"
+              autocomplete="off"
+            >
+          </label>
+          <div class="generate-row">
+            <button id="select-all-delete-songs" class="button button-quiet" type="button" disabled>
+              Select all shown
+            </button>
+            <button id="clear-delete-songs" class="button button-quiet" type="button" disabled>
+              Clear selection
+            </button>
+          </div>
+          <p id="delete-song-status" class="field-note"></p>
+          <ul id="delete-song-list" class="delete-list" aria-labelledby="delete-song-heading"></ul>
+          <div class="transport-controls">
+            <button id="run-delete-songs" class="button button-danger" type="button" disabled>
+              Delete selected songs
+            </button>
+            <button id="remove-empty-workspace" class="button button-danger" type="button" hidden>
+              Remove the empty workspace
+            </button>
+            <button id="cancel-delete" class="button button-quiet" type="button" hidden>
+              Stop
+            </button>
+            <button id="undo-delete" class="button button-quiet" type="button" hidden>
+              Undo
+            </button>
+          </div>
+
+          <h3 class="delete-subheading" id="delete-trash-heading">Recycle bin <span class="hint" tabindex="0" role="note" aria-label="Everything this account has moved to Suno's recycle bin. Restore puts a song back in your library; Delete for good removes it with no way back from anywhere." title="Everything this account has moved to Suno's recycle bin. Restore puts a song back in your library; Delete for good removes it with no way back from anywhere.">?</span></h3>
+          <div class="generate-row">
+            <button id="load-trash" class="button button-quiet" type="button" disabled>
+              Load recycle bin
+            </button>
+            <button id="select-all-trash" class="button button-quiet" type="button" disabled>
+              Select all shown
+            </button>
+            <button id="clear-trash" class="button button-quiet" type="button" disabled>
+              Clear selection
+            </button>
+          </div>
+          <label class="field" for="trash-filter">
+            <span class="field-label">Filter</span>
+            <input
+              id="trash-filter"
+              class="field-input"
+              type="search"
+              placeholder="Title or style tag"
+              autocomplete="off"
+              disabled
+            >
+          </label>
+          <p id="trash-status" class="field-note"></p>
+          <ul id="trash-list" class="delete-list" aria-labelledby="delete-trash-heading"></ul>
+          <div class="transport-controls">
+            <button id="restore-trash" class="button button-quiet" type="button" disabled>
+              Restore selected
+            </button>
+            <button id="purge-trash" class="button button-danger" type="button" disabled>
+              Delete selected for good
+            </button>
+          </div>
+
+          <div id="delete-meter" class="work-meter" hidden>
+            <progress max="1" value="0" aria-label="Removal progress"></progress>
+            <p class="work-meter-label"></p>
+          </div>
+          <p id="delete-status" class="session-state" role="status" aria-live="polite"></p>
+          <ul id="delete-report" class="download-report"></ul>
+        </section>
+      </section>
+
+      <section
+        id="export-panel"
+        class="workspace-panel"
+        role="tabpanel"
+        aria-labelledby="export-tab"
+        data-workspace-panel="export"
+        hidden
+      >
+        <section class="module" aria-labelledby="export-heading">
+          <div class="module-heading">
+            <h2 id="export-heading">
+              <span class="section-icon" data-section-icon="export" aria-hidden="true"></span>
+              Library catalog <span class="hint" tabindex="0" role="note" aria-label="Writes a spreadsheet of your library's details: titles, styles, prompts, dates. Not the audio; that is the Download tab." title="Writes a spreadsheet of your library's details: titles, styles, prompts, dates. Not the audio; that is the Download tab.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/export" target="_blank" rel="noreferrer" aria-label="How to use the Export tab: open its guide on chunks.md" title="How to use the Export tab: open its guide on chunks.md">?</a>
+          </div>
+          <p class="profile-description">
+            Every song's details as one file: what it is called, how it is
+            tagged, when it was made, whether it is public. Nothing on Suno
+            changes.
+          </p>
+
+          <label class="field" for="export-scope">
+            <span class="field-label">Workspace</span>
+            <select id="export-scope" class="field-input" disabled>
+              <option value="">Connect to Suno to list your workspaces</option>
+            </select>
+          </label>
+          <div class="generate-row">
+            <label class="field field-compact" for="export-format">
+              <span class="field-label">Format</span>
+              <select id="export-format" class="field-input">
+                <option value="csv">CSV (spreadsheet)</option>
+                <option value="json">JSON</option>
+              </select>
+            </label>
+            <button id="refresh-export-workspaces" class="button button-quiet" type="button">
+              Refresh list
+            </button>
+          </div>
+          <label class="checkbox-row" for="export-bulk">
+            <input id="export-bulk" type="checkbox">
+            <span class="field-label">Include lyrics and descriptions <span class="hint" tabindex="0" role="note" aria-label="Lyrics and descriptions are long enough to make a spreadsheet hard to read, so they are left out unless you ask for them." title="Lyrics and descriptions are long enough to make a spreadsheet hard to read, so they are left out unless you ask for them.">?</span>
+          </label>
+
+          <div class="transport-controls">
+            <button id="run-export" class="button button-primary" type="button" disabled>
+              Export catalog
+            </button>
+            <button id="cancel-export" class="button button-quiet" type="button" hidden>
+              Stop
+            </button>
+          </div>
+          <div id="export-meter" class="work-meter" hidden>
+            <progress max="1" value="0" aria-label="Export progress"></progress>
+            <p class="work-meter-label"></p>
+          </div>
+          <p id="export-status" class="session-state" role="status" aria-live="polite"></p>
+          <ul id="export-report" class="download-report"></ul>
+        </section>
+      </section>
+
+      <section
+        id="edit-panel"
+        class="workspace-panel"
+        role="tabpanel"
+        aria-labelledby="edit-tab"
+        data-workspace-panel="edit"
+        hidden
+      >
+        <section class="module" aria-labelledby="edit-heading">
+          <div class="module-heading">
+            <h2 id="edit-heading">
+              <span class="section-icon" data-section-icon="edit" aria-hidden="true"></span>
+              Bulk edit <span class="hint" tabindex="0" role="note" aria-label="Changes titles, style summaries and visibility on many songs at once. Suno takes one song per request, so a large run takes a while." title="Changes titles, style summaries and visibility on many songs at once. Suno takes one song per request, so a large run takes a while.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/edit" target="_blank" rel="noreferrer" aria-label="How to use the Edit tab: open its guide on chunks.md" title="How to use the Edit tab: open its guide on chunks.md">?</a>
+          </div>
+          <p class="profile-description">
+            Retitle, retag or republish many songs in one pass. Nothing is sent
+            until you have seen what would change and confirmed it.
+          </p>
+
+          <label class="field" for="edit-workspace">
+            <span class="field-label">Workspace</span>
+            <select id="edit-workspace" class="field-input" disabled>
+              <option value="">Connect to Suno to list your workspaces</option>
+            </select>
+          </label>
+          <div class="generate-row">
+            <button id="load-edit-songs" class="button button-quiet" type="button" disabled>
+              Load songs
+            </button>
+            <button id="select-all-edit-songs" class="button button-quiet" type="button" disabled>
+              Select all shown
+            </button>
+            <button id="clear-edit-songs" class="button button-quiet" type="button" disabled>
+              Clear selection
+            </button>
+          </div>
+          <label class="field" for="edit-filter">
+            <span class="field-label">Filter</span>
+            <input
+              id="edit-filter"
+              class="field-input"
+              type="search"
+              placeholder="Title or style tag"
+              autocomplete="off"
+              disabled
+            >
+          </label>
+          <p id="edit-song-status" class="field-note"></p>
+          <ul id="edit-song-list" class="delete-list" aria-labelledby="edit-heading"></ul>
+
+          <h3 class="delete-subheading">Changes</h3>
+          <label class="field" for="edit-title-mode">
+            <span class="field-label">Title</span>
+            <select id="edit-title-mode" class="field-input">
+              <option value="keep">Keep as is</option>
+              <option value="prefix">Add before it</option>
+              <option value="suffix">Add after it</option>
+              <option value="replace">Replace it</option>
+            </select>
+          </label>
+          <label class="field" for="edit-title-template">
+            <span class="field-label">Title text <span class="hint" tabindex="0" role="note" aria-label="Added before or after each song's own title, or used as the whole new title. Written exactly as typed, spaces included. {title} is the current title, {n} its place in the run, {workspace} the workspace it came from." title="Added before or after each song's own title, or used as the whole new title. Written exactly as typed, spaces included. {title} is the current title, {n} its place in the run, {workspace} the workspace it came from.">?</span>
+            <input
+              id="edit-title-template"
+              class="field-input"
+              type="text"
+              placeholder="Choose what to do with titles first"
+              autocomplete="off"
+              disabled
+            >
+          </label>
+          <div class="generate-row">
+            <label class="field field-compact" for="edit-tag-mode">
+              <span class="field-label">Style summary</span>
+              <select id="edit-tag-mode" class="field-input">
+                <option value="keep">Keep as is</option>
+                <option value="append">Add to it</option>
+                <option value="replace">Replace it</option>
+              </select>
+            </label>
+            <label class="field field-compact" for="edit-visibility">
+              <span class="field-label">Visibility</span>
+              <select id="edit-visibility" class="field-input">
+                <option value="keep">Keep as is</option>
+                <option value="private">Private</option>
+                <option value="public">Public</option>
+              </select>
+            </label>
+          </div>
+          <label class="field" for="edit-tags">
+            <span class="field-label">Style tags</span>
+            <input
+              id="edit-tags"
+              class="field-input"
+              type="text"
+              placeholder="lo-fi, warm, tape"
+              autocomplete="off"
+              disabled
+            >
+          </label>
+
+          <p id="edit-preview" class="field-note"></p>
+          <div class="transport-controls">
+            <button id="run-edit" class="button button-primary" type="button" disabled>
+              Apply changes
+            </button>
+            <button id="cancel-edit" class="button button-quiet" type="button" hidden>
+              Stop
+            </button>
+          </div>
+          <div id="edit-meter" class="work-meter" hidden>
+            <progress max="1" value="0" aria-label="Edit progress"></progress>
+            <p class="work-meter-label"></p>
+          </div>
+          <p id="edit-status" class="session-state" role="status" aria-live="polite"></p>
+          <ul id="edit-report" class="download-report"></ul>
+        </section>
+      </section>
+
+      <div
+        id="integration-panel"
+        class="workspace-panel"
+        role="tabpanel"
+        aria-labelledby="integration-tab"
+        data-workspace-panel="integration"
+        hidden
+      >
+        <section class="module" aria-labelledby="integration-heading">
+          <div class="module-heading">
+            <h2 id="integration-heading">
+              <span class="section-icon" data-section-icon="integration" aria-hidden="true"></span>
+              Integration <span class="hint" tabindex="0" role="note" aria-label="Adds Creator Toolkit buttons to suno.com itself: download on every song, Bulk Generate beside Create, and Style Search in the Styles box. Each has its own switch here." title="Adds Creator Toolkit buttons to suno.com itself: download on every song, Bulk Generate beside Create, and Style Search in the Styles box. Each has its own switch here.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/integration" target="_blank" rel="noreferrer" aria-label="How to use the Integration tab: open its guide on chunks.md" title="How to use the Integration tab: open its guide on chunks.md">?</a>
+          </div>
+          <p class="profile-description">
+            Adds Creator Toolkit's controls to suno.com itself, beside Suno's own.
+          </p>
+
+          <fieldset class="telemetry-consent">
+            <legend>Download button</legend>
+            <label class="toggle-row" for="integration-download">
+              <span class="field-label">Show the download button on suno.com</span>
+              <input id="integration-download" type="checkbox" role="switch" checked class="toggle-switch">
+            </label>
+            <p class="field-note">
+              A download button on every song on suno.com, yours and public
+              ones, that does not count against Suno's download limit. Songs
+              are saved in the format you choose below.
+            </p>
+            <label class="field" for="integration-format">
+              <span class="field-label">Save songs as</span>
+              <select id="integration-format" class="field-input">
+                <option value="m4a">M4A</option>
+                <option value="mp3" selected>MP3</option>
+                <option value="wav">WAV</option>
+              </select>
+            </label>
+            <figure class="integration-preview">
+              <img
+                src="images/integration-preview.png"
+                width="666"
+                height="222"
+                alt="Two song rows in the Suno Library, each with the Creator Toolkit download button right after Share; one shows its tooltip: Download via Creator Toolkit (does not count against limit)."
+              >
+            </figure>
+          </fieldset>
+          <fieldset class="telemetry-consent">
+            <legend>Bulk Generate button</legend>
+            <label class="toggle-row" for="integration-bulk">
+              <span class="field-label">Show Bulk Generate on suno.com/create</span>
+              <input id="integration-bulk" type="checkbox" role="switch" checked class="toggle-switch">
+            </label>
+            <p class="field-note">
+              Bulk generates your song many times with sliding Weirdness and
+              Style Influence values, so you find the best version faster. Set
+              how many songs and how far the values slide below.
+            </p>
+            <div class="generate-row">
+              <label class="field field-compact" for="integration-bulk-songs">
+                <span class="field-label">Songs per press</span>
+                <input id="integration-bulk-songs" class="field-input" type="number" min="2" max="100" step="2" inputmode="numeric" value="10">
+              </label>
+              <label class="field field-compact" for="integration-bulk-weirdness">
+                <span class="field-label">Weirdness ± <span class="hint" tabindex="0" role="note" aria-label="How far the weirdness slides up and down from your value on suno.com across the run. With 10 from 50, the songs go 55, 45, 60, 40. 0 keeps your value." title="How far the weirdness slides up and down from your value on suno.com across the run. With 10 from 50, the songs go 55, 45, 60, 40. 0 keeps your value.">?</span>
+                <input id="integration-bulk-weirdness" class="field-input" type="number" min="0" max="50" step="1" inputmode="numeric" value="10">
+              </label>
+              <label class="field field-compact" for="integration-bulk-style">
+                <span class="field-label">Style influence ± <span class="hint" tabindex="0" role="note" aria-label="How far the style influence slides up and down from your value on suno.com across the run. With 10 from 50, the songs go 55, 45, 60, 40. 0 keeps your value." title="How far the style influence slides up and down from your value on suno.com across the run. With 10 from 50, the songs go 55, 45, 60, 40. 0 keeps your value.">?</span>
+                <input id="integration-bulk-style" class="field-input" type="number" min="0" max="50" step="1" inputmode="numeric" value="10">
+              </label>
+              <label class="field field-compact" for="integration-bulk-audio">
+                <span class="field-label">Audio influence ± <span class="hint" tabindex="0" role="note" aria-label="How far the audio influence slides up and down from your value on suno.com. Only used when your song has an audio reference." title="How far the audio influence slides up and down from your value on suno.com. Only used when your song has an audio reference.">?</span>
+                <input id="integration-bulk-audio" class="field-input" type="number" min="0" max="50" step="1" inputmode="numeric" value="10">
+              </label>
+            </div>
+            <label class="field" for="integration-bulk-note">
+              <span class="field-label">Note</span>
+              <input id="integration-bulk-note" class="field-input" type="text" maxlength="80" placeholder="e.g. Energetic Run">
+            </label>
+            <label class="field" for="integration-bulk-template">
+              <span class="field-label">Title template <span class="hint" tabindex="0" role="note" aria-label="How each song Bulk Generate makes is named. {title} is the title on suno.com, {code} stamps the sliders the take used, like S70W20A65." title="How each song Bulk Generate makes is named. {title} is the title on suno.com, {code} stamps the sliders the take used, like S70W20A65.">?</span>
+              <input id="integration-bulk-template" class="field-input" type="text" maxlength="200" value="{title} {note} {code} {R}">
+              <details class="template-help">
+                <summary>
+                  <span>What can go in a title</span>
+                  <svg class="summary-mark" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m6 9 6 6 6-6"></path>
+                  </svg>
+                </summary>
+                <dl>
+                  <dt><code>{title}</code></dt>
+                  <dd>The title set on suno.com.</dd>
+                  <dt><code>{note}</code></dt>
+                  <dd>The note above.</dd>
+                  <dt><code>{styles}</code></dt>
+                  <dd>The styles set on suno.com.</dd>
+                  <dt><code>{code}</code></dt>
+                  <dd>The take's sliders as one code, like <code>S70W20A65</code>.</dd>
+                  <dt><code>{S}</code> <code>{W}</code> <code>{A}</code></dt>
+                  <dd>Style influence, weirdness and audio influence on their own.</dd>
+                  <dt><code>{R}</code></dt>
+                  <dd>The reference number; one song has none, so it disappears.</dd>
+                  <dt><code>{n}</code></dt>
+                  <dd>The take number, counting from 1.</dd>
+                </dl>
+                <p>Anything with nothing behind it disappears, and so do the spaces around it.</p>
+              </details>
+            </label>
+            <figure class="integration-preview">
+              <img
+                src="images/bulk-generate-preview.png"
+                width="445"
+                height="107"
+                alt="Suno's create footer with Create on the left and the green Bulk Generate (10) button beside it on the right."
+              >
+            </figure>
+          </fieldset>
+          <fieldset class="telemetry-consent">
+            <legend>Style Search button</legend>
+            <label class="toggle-row" for="integration-style-search">
+              <span class="field-label">Show Style Search in Suno's Styles box</span>
+              <input id="integration-style-search" type="checkbox" role="switch" checked class="toggle-switch">
+            </label>
+            <p class="field-note">
+              Swaps the styles in Suno's Styles box for the ones the most
+              popular songs in that style use. Suno's own undo button brings
+              yours back.
+            </p>
+            <figure class="integration-preview">
+              <img
+                src="images/style-search-preview.png"
+                width="434"
+                height="253"
+                alt="Suno's Styles box with the green Style Search button at the start of its row of style controls."
+              >
+            </figure>
+          </fieldset>
+          <p id="integration-status" class="session-state" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+
+      <div
+        id="changelog-panel"
+        class="workspace-panel"
+        role="tabpanel"
+        aria-labelledby="changelog-tab"
+        data-workspace-panel="changelog"
+        hidden
+      >
+        <section class="module" aria-labelledby="changelog-heading">
+          <div class="module-heading">
+            <h2 id="changelog-heading">
+              <span class="section-icon" data-section-icon="changelog" aria-hidden="true"></span>
+              What's new <span class="hint" tabindex="0" role="note" aria-label="What changed in this version and the two before it, in plain words." title="What changed in this version and the two before it, in plain words.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/changelog" target="_blank" rel="noreferrer" aria-label="How to use the Changelog tab: open its guide on chunks.md" title="How to use the Changelog tab: open its guide on chunks.md">?</a>
+          </div>
+          <p class="profile-description">
+            The last three versions. You will see a note like this the first
+            time you open a new one.
+          </p>
+          <div id="changelog-list" class="changelog-list"></div>
+        </section>
+      </div>
+
+      <div
+        id="search-panel"
+        class="workspace-panel"
+        role="tabpanel"
+        aria-labelledby="search-tab"
+        data-workspace-panel="search"
+        hidden
+      >
+        <section class="module" aria-labelledby="search-heading">
+          <div class="module-heading">
+            <h2 id="search-heading">
+              <span class="section-icon" data-section-icon="search" aria-hidden="true"></span>
+              Style Search <span class="hint" tabindex="0" role="note" aria-label="Reads the public songs Suno ranks highest for a keyword, a style or one of your songs, and ranks the style words they share. Nothing here is generated." title="Reads the public songs Suno ranks highest for a keyword, a style or one of your songs, and ranks the style words they share. Nothing here is generated.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/search" target="_blank" rel="noreferrer" aria-label="How to use the Style Search tab: open its guide on chunks.md" title="How to use the Style Search tab: open its guide on chunks.md">?</a>
+          </div>
+          <p class="profile-description">
+            Learn from the best! Name a style, a keyword or one of your own
+            songs, and this reads the public songs Suno ranks highest for it.
+            The style words those songs share come back ranked, with the songs
+            they came from.
+          </p>
+
+          <label class="field" for="search-term">
+            <span class="field-label">Style or keyword</span>
+            <input
+              id="search-term"
+              class="field-input"
+              type="search"
+              placeholder="fullmetal alchemist anime op"
+              autocomplete="off"
+            >
+          </label>
+
+          <label class="field" for="search-workspace">
+            <span class="field-label">
+              Or one of your songs
+              <span class="hint" tabindex="0" role="note" aria-label="Pick a workspace, then a song in it. The search then runs on that song's own style words, so the results are styles that sit near the one you already made." title="Pick a workspace, then a song in it. The search then runs on that song's own style words, so the results are styles that sit near the one you already made.">?</span>
+            </span>
+            <select id="search-workspace" class="field-input">
+              <option value="">Search the words above instead</option>
+            </select>
+          </label>
+          <label class="field" for="search-song">
+            <span class="field-label">Song</span>
+            <select id="search-song" class="field-input" disabled>
+              <option value="">Pick a workspace first</option>
+            </select>
+          </label>
+
+          <div class="button-row">
+            <button id="run-search" class="button button-primary" type="button">Search styles</button>
+            <button id="cancel-search" class="button button-quiet" type="button" hidden>Stop</button>
+          </div>
+          <p id="search-status" class="session-state" role="status" aria-live="polite"></p>
+
+          <div id="search-results" hidden>
+            <h3 class="subheading">Top songs</h3>
+            <ul id="search-songs" class="queue-list" aria-label="Highest rated songs for this search"></ul>
+
+            <h3 class="subheading">Ready to use</h3>
+            <label class="field" for="search-style-box">
+              <span class="field-label">Styles</span>
+              <textarea id="search-style-box" class="field-input" rows="2"></textarea>
+            </label>
+            <label class="field" for="search-negative-box">
+              <span class="field-label">Negative styles</span>
+              <textarea id="search-negative-box" class="field-input" rows="2"></textarea>
+            </label>
+            <div class="button-row">
+              <button id="search-apply" class="button" type="button">Send both to Generate</button>
+            </div>
+
+            <h3 class="subheading">
+              Styles that earned it
+              <span class="hint" tabindex="0" role="note" aria-label="Ranked by how many of the songs read carry the style word, weighted by the upvotes those songs earned. Core is the strongest band, then strong, then fringe. The number of songs is on every row, so the ranking never rests on colour alone." title="Ranked by how many of the songs read carry the style word, weighted by the upvotes those songs earned. Core is the strongest band, then strong, then fringe. The number of songs is on every row, so the ranking never rests on colour alone.">?</span>
+            </h3>
+            <ul id="search-styles" class="style-list" aria-label="Ranked styles"></ul>
+            <div class="button-row">
+              <button id="search-expand" class="button button-quiet" type="button" hidden>Show every style found</button>
+            </div>
+            <h3 class="subheading">Styles other songs excluded</h3>
+            <ul id="search-negatives" class="style-list" aria-label="Ranked excluded styles"></ul>
+          </div>
+        </section>
+      </div>
+
+      <div
+        id="watermark-panel"
+        class="workspace-panel"
+        role="tabpanel"
+        aria-labelledby="watermark-tab"
+        data-workspace-panel="watermark"
+        hidden
+      >
+        <section class="module" aria-labelledby="watermark-heading">
+          <div class="module-heading">
+            <h2 id="watermark-heading">
+              <span class="section-icon" data-section-icon="watermark" aria-hidden="true"></span>
+              Watermark check <span class="hint" tabindex="0" role="note" aria-label="Asks Suno's public checker whether a file carries Suno's content credentials. Any audio file from anywhere; nothing is added to your library. Credentials live in the file itself, so a song converted or re-encoded elsewhere usually has none left." title="Asks Suno's public checker whether a file carries Suno's content credentials. Any audio file from anywhere; nothing is added to your library. Credentials live in the file itself, so a song converted or re-encoded elsewhere usually has none left.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/watermark" target="_blank" rel="noreferrer" aria-label="How to use the Watermark tab: open its guide on chunks.md" title="How to use the Watermark tab: open its guide on chunks.md">?</a>
+          </div>
+          <p class="profile-description">
+            Drop in any songs and Suno's own checker says whether each one
+            carries Suno's watermark. A watermark it finds can be removed
+            here too. Nothing goes into your library.
+          </p>
+          <label id="watermark-dropzone" class="dropzone" for="watermark-files">
+            <span class="dropzone-cross" aria-hidden="true"></span>
+            <span>
+              <strong>Add audio</strong>
+              <small>Drop files or browse · multiple selection supported</small>
+            </span>
+            <input id="watermark-files" type="file" accept=".mp3,.wav,.m4a,.flac,.ogg,.aac,.webm,audio/*" multiple>
+          </label>
+           <div class="transport-controls">
+             <button id="run-watermark" class="button button-primary" type="button" disabled>Check</button>
+             <button id="strip-watermark" class="button" type="button" disabled>Remove credentials</button>
+             <button id="download-stripped" class="button" type="button" hidden>Download</button>
+             <button id="clear-watermark" class="button button-quiet" type="button" disabled>Clear</button>
+             <button id="cancel-watermark" class="button button-quiet" type="button" hidden>Stop</button>
+           </div>
+          <p id="watermark-status" class="session-state" role="status" aria-live="polite"></p>
+          <ul id="watermark-list" class="queue-list" aria-label="Checked songs"></ul>
+        </section>
+      </div>
+
+      <div
+        id="feedback-panel"
+        class="workspace-panel"
+        role="tabpanel"
+        aria-labelledby="feedback-tab"
+        data-workspace-panel="feedback"
+        hidden
+      >
+        <section class="module" aria-labelledby="feedback-heading">
+          <div class="module-heading">
+            <h2 id="feedback-heading">
+              <span class="section-icon" data-section-icon="feedback" aria-hidden="true"></span>
+              Feedback <span class="hint" tabindex="0" role="note" aria-label="Sends a feature request or a bug report to the developer, exactly as typed. There is no reply address, so include what you need seen." title="Sends a feature request or a bug report to the developer, exactly as typed. There is no reply address, so include what you need seen.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/feedback" target="_blank" rel="noreferrer" aria-label="How to use the Feedback tab: open its guide on chunks.md" title="How to use the Feedback tab: open its guide on chunks.md">?</a>
+          </div>
+          <p class="profile-description">
+            Send feedback to the developer. Please include any error messages,
+            or what caused it.
+          </p>
+
+          <label class="field" for="feedback-kind">
+            <span class="field-label">What is this</span>
+            <select id="feedback-kind" class="field-input">
+              <option value="feature">I would like to see…</option>
+              <option value="fix">Something is broken…</option>
+            </select>
+          </label>
+
+          <label class="field" for="feedback-message">
+            <span class="field-label">Your message</span>
+            <textarea
+              id="feedback-message"
+              class="field-input"
+              rows="5"
+              maxlength="1000"
+              placeholder="A feature you would use, and what it would save you."
+            ></textarea>
+            <p id="feedback-count" class="field-note">0 of 1000</p>
+          </label>
+
+          <div class="button-row">
+            <button id="send-feedback" class="button button-primary" type="button">Send</button>
+          </div>
+          <p id="feedback-status" class="session-state" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+
+      <div
+        id="support-panel"
+        class="workspace-panel"
+        role="tabpanel"
+        aria-labelledby="support-tab"
+        data-workspace-panel="support"
+        hidden
+      >
+        <section class="module" aria-labelledby="support-heading">
+          <div class="module-heading">
+            <h2 id="support-heading">
+              <span class="section-icon" data-section-icon="support" aria-hidden="true"></span>
+              Support Creator Toolkit <span class="hint" tabindex="0" role="note" aria-label="Every tool here is free. Supporting is optional and changes nothing in the panel." title="Every tool here is free. Supporting is optional and changes nothing in the panel.">?</span>
+            </h2>
+            <a class="help-link" href="https://chunks.md/docs/suno-toolkit/support" target="_blank" rel="noreferrer" aria-label="How to use the Support tab: open its guide on chunks.md" title="How to use the Support tab: open its guide on chunks.md">?</a>
+          </div>
+          <p class="profile-description">
+            Every tool in this panel is free, and stays free. If the toolkit
+            saves you time, supporting it keeps the development going, and
+            supporters have a say in what gets built next.
+          </p>
+
+          <div class="support-tier">
+            <p class="support-tier-name">Creator Toolkit dev support</p>
+            <p class="support-tier-pitch">
+              Support the development of the Creator Toolkit extension, giving
+              you the best Suno features!
+            </p>
+            <p class="support-tier-perks">
+              Feature requests, a say in what gets built next, and early
+              versions
+            </p>
+            <a
+              id="support-tier"
+              class="button button-primary"
+              href="https://ko-fi.com/summary/f001c16d-1ba0-49f5-ac99-f8214ac0c50d"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Join the support tier
+            </a>
+          </div>
+
+          <a
+            id="support-kofi"
+            class="button button-quiet"
+            href="https://ko-fi.com/vendoland"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Or buy a one-off coffee
+          </a>
+          <p class="profile-description">
+            You can also support the extension by rating it 5 stars on the
+            Chrome Web Store.
+          </p>
+          <a
+            id="support-store"
+            class="button button-quiet"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Rate it on the Chrome Web Store
+          </a>
+          <fieldset class="language-selector">
+            <legend id="language-label">Language</legend>
+            <select id="language-select" aria-label="Select display language">
+              <option value="en">English</option>
+              <option value="ja">日本語</option>
+              <option value="de">Deutsch</option>
+              <option value="es">Español</option>
+              <option value="fr">Français</option>
+            </select>
+          </fieldset>
+          <fieldset class="telemetry-consent">
+            <legend id="telemetry-label">Usage &amp; crash reports</legend>
+            <label class="checkbox-row" for="telemetry-consent">
+              <input id="telemetry-consent" type="checkbox">
+              <span class="field-label">Send anonymous usage &amp; crash reports</span>
+            </label>
+            <p class="field-note">
+              Reports are sent unless you untick this. They are used to find
+              and fix the errors users are running into. A report says which
+              tool ran, how it ended and which failure codes it met; a failed run
+              also says where it stopped and gives this computer's processor
+              cores and memory. Never song
+              titles, lyrics, workspace names or anything about your account.
+            </p>
+            <p class="field-note">
+              <a
+                class="support-privacy-link"
+                href="https://chunks.md/suno-toolkit-privacy"
+                target="_blank"
+                rel="noreferrer"
+              >Privacy policy</a>
+              · Everything runs in your browser against your own Suno session.
+            </p>
+          </fieldset>
+          <div class="support-version">
+            <p id="support-version" class="field-note"></p>
+            <div class="generate-row">
+              <button id="check-update" class="button button-quiet" type="button">
+                Check for updates
+              </button>
+              <!-- The store address is built from chrome.runtime.id at
+                   runtime: it differs between an unpacked build and a store
+                   install, so hard-coding one would send half the users to a
+                   page that does not exist. -->
+              <a
+                id="update-link"
+                class="button button-primary"
+                target="_blank"
+                rel="noreferrer"
+                hidden
+              >Update on the Chrome Web Store</a>
+            </div>
+            <p id="update-status" class="session-state" role="status" aria-live="polite"></p>
+          </div>
+        </section>
+      </div>
+
+      <!-- The standing offer, one wide button under whichever tab is open: it
+           opens the support tier, the same page as the Support tab's own. -->
+      <a
+        id="header-support"
+        class="header-support"
+        href="https://ko-fi.com/summary/f001c16d-1ba0-49f5-ac99-f8214ac0c50d"
+        target="_blank"
+        rel="noreferrer"
+        title="Support the extension on Ko-fi and have a say in what gets built next. Every tool here is free and stays free."
+        aria-label="Support the extension on Ko-fi and have a say in what gets built next. Every tool here is free and stays free."
+      ><span class="header-support-icon" data-section-icon="support" data-bare aria-hidden="true"></span
+        ><span id="header-support-label">Thank for using this tool.</span></a>
+      <p id="status" class="status-line" role="status" aria-live="polite"></p>
+
+    </main>
+
+    <dialog
+      id="changelog-dialog"
+      class="support-dialog"
+      aria-labelledby="changelog-dialog-title"
+    >
+      <div class="support-dialog-card">
+        <span class="kicker">Welcome!</span>
+        <h2 id="changelog-dialog-title">Updated</h2>
+        <div id="changelog-dialog-body" class="changelog-list"></div>
+        <div class="support-dialog-actions">
+          <button id="changelog-dialog-action" class="button button-primary" type="button" hidden></button>
+          <button id="changelog-dialog-close" class="button button-primary" type="button">
+            Okay
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog
+      id="edit-confirm-dialog"
+      class="support-dialog"
+      aria-labelledby="edit-confirm-title"
+      aria-describedby="edit-confirm-message"
+    >
+      <div class="support-dialog-card">
+        <span class="kicker">Confirm</span>
+        <h2 id="edit-confirm-title">Apply these changes?</h2>
+        <p id="edit-confirm-message" class="profile-description"></p>
+        <div class="support-dialog-actions">
+          <button id="edit-confirm-go" class="button button-primary" type="button">
+            Apply
+          </button>
+          <button id="edit-confirm-cancel" class="button button-quiet" type="button">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog
+      id="delete-confirm-dialog"
+      class="support-dialog"
+      aria-labelledby="delete-confirm-title"
+      aria-describedby="delete-confirm-message"
+    >
+      <div class="support-dialog-card">
+        <span class="kicker">Confirm</span>
+        <h2 id="delete-confirm-title">Remove these?</h2>
+        <p id="delete-confirm-message" class="profile-description"></p>
+        <div class="support-dialog-actions">
+          <button id="delete-confirm-go" class="button button-danger" type="button">
+            Remove
+          </button>
+          <button id="delete-confirm-cancel" class="button button-quiet" type="button">
+            Keep them
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog
+      id="support-dialog"
+      class="support-dialog"
+      aria-labelledby="support-dialog-title"
+      aria-describedby="support-dialog-message"
+    >
+      <div class="support-dialog-card">
+        <span class="kicker">Creator Toolkit</span>
+        <h2 id="support-dialog-title">You make a lot of music</h2>
+        <p id="support-dialog-message" class="profile-description">
+          You use this toolkit a lot. Keeping it working every time Suno
+          changes processing, generation, or its API is ongoing work. If it
+          saves you time, please consider supporting further development.
+          You can also support the extension by rating it 5 stars on the
+          Chrome Web Store. Either way, everything stays free.
+        </p>
+        <div class="support-dialog-actions">
+          <a
+            id="support-dialog-tier"
+            class="button button-primary"
+            href="https://ko-fi.com/summary/f001c16d-1ba0-49f5-ac99-f8214ac0c50d"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Join the support tier
+          </a>
+          <a
+            id="support-dialog-kofi"
+            class="button button-quiet"
+            href="https://ko-fi.com/vendoland"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Buy a one-off coffee
+          </a>
+          <a
+            id="support-dialog-store"
+            class="button button-quiet"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Rate it 5 stars
+          </a>
+          <button id="support-dialog-close" class="button button-quiet" type="button">
+            Maybe later
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <script type="module" src="src/cvt3.js"></script>
+  </body>
+</html>

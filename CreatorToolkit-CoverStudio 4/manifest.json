@@ -1,0 +1,129 @@
+{
+   "action": {
+      "default_icon": {
+         "16": "icons/icon-16.png",
+         "32": "icons/icon-32.png",
+         "48": "icons/icon-48.png",
+         "128": "icons/icon-128.png"
+      },
+      "default_title": "Open Creator Toolkit"
+   },
+   "background": {
+      "service_worker": "background.js",
+      "type": "module"
+   },
+   "content_scripts": [
+      {
+         "js": [
+            "src/telemetry/relay.js",
+            "src/studio-picker.js"
+         ],
+         "matches": [
+            "https://suno.com/studio",
+            "https://suno.com/studio?*",
+            "https://suno.com/studio/*"
+         ],
+         "run_at": "document_idle"
+      },
+      {
+         "js": [
+            "src/stream-tap-core.js",
+            "src/stream-tap.js",
+            "src/create-tap.js"
+         ],
+         "matches": [
+            "https://suno.com/*"
+         ],
+         "run_at": "document_start",
+         "world": "MAIN"
+      },
+      {
+         "js": [
+            "src/stream-tap-core.js",
+            "src/telemetry/relay.js",
+            "src/stream-driver.js",
+            "src/page-notice.js",
+            "src/song-download-button.js",
+            "src/bulk-generate-button.js",
+            "src/style-search-button.js"
+         ],
+         "matches": [
+            "https://suno.com/*"
+         ],
+         "run_at": "document_idle"
+      },
+      {
+         "js": [
+            "src/youtube-capture.js"
+         ],
+         "matches": [
+            "https://www.youtube.com/*",
+            "https://music.youtube.com/*",
+            "https://m.youtube.com/*"
+         ],
+         "run_at": "document_idle"
+      },
+      {
+         "js": [
+            "src/suno-lyrics-fill.js"
+         ],
+         "matches": [
+            "https://suno.com/*"
+         ],
+         "run_at": "document_idle"
+      }
+   ],
+   "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+   },
+   "cross_origin_embedder_policy": {
+      "value": "require-corp"
+   },
+   "cross_origin_opener_policy": {
+      "value": "same-origin"
+   },
+   "description": "Cover Studio : source, style/voix, extrait, mode dégradé ou ralenti 50 %, lyrics, upload Suno et Remix > Cover. Sans PIN, sans barre latérale.",
+   "host_permissions": [
+      "https://suno.com/*",
+      "https://auth.suno.com/*",
+      "https://studio-api-prod.suno.com/*",
+      "https://*.suno.ai/*",
+      "https://*.amazonaws.com/*",
+      "https://*.cloudfront.net/*",
+      "https://www.youtube.com/*",
+      "https://music.youtube.com/*",
+      "https://m.youtube.com/*",
+      "https://youtu.be/*",
+      "https://i.ytimg.com/*",
+      "https://genius.com/*",
+      "https://api.genius.com/*",
+      "https://lrclib.net/*",
+      "https://api.lyrics.ovh/*",
+      "https://www.hooktheory.com/*",
+      "https://hooktheory.com/*",
+      "https://songbpm.com/*"
+   ],
+   "icons": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+   },
+   "manifest_version": 3,
+   "minimum_chrome_version": "120",
+   "name": "Creator Toolkit V4.3.4 Cover Studio",
+   "optional_host_permissions": [
+      "https://*/*",
+      "http://localhost/*",
+      "http://127.0.0.1/*"
+   ],
+   "permissions": [
+      "cookies",
+      "storage",
+      "offscreen",
+      "scripting",
+      "tabs",
+      "clipboardWrite"
+   ],
+   "version": "4.3.4"
+}
