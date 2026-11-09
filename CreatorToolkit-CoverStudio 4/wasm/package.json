@@ -1,0 +1,17 @@
+{
+  "name": "suno-wasm",
+  "type": "module",
+  "description": "Browser-safe protocol helpers for the Suno WASM Uploader extension",
+  "version": "0.1.0",
+  "license": "MIT",
+  "files": [
+    "suno_wasm_bg.wasm",
+    "suno_wasm.js",
+    "suno_wasm.d.ts"
+  ],
+  "main": "suno_wasm.js",
+  "types": "suno_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
