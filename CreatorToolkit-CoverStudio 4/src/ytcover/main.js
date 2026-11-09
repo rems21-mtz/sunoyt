@@ -212,6 +212,7 @@ const AUTO_PROFILES = [
   { id: "aggressive", label: "Aggressive" },
   { id: "instrumental", label: "Instrumental" },
   { id: "slow", label: "Ralenti 50%" },
+  { id: "transparent", label: "Transparent" },
 ];
 
 const AI_PROMPT = `Act as an expert in simplified English phonetic transcription. Transform the lyrics given to you into 100% English simplified phonetics by strictly applying these rules without exception:
@@ -256,13 +257,14 @@ function maxSegmentDuration() {
 
 function profilesForAuto() {
   if (state.mode === "slow") return ["slow"];
+  if (state.mode === "transparent") return ["transparent"];
   return AUTO_PROFILES
     .map((profile) => profile.id)
-    .filter((id) => id !== "slow" && state.enabledProfiles.has(id));
+    .filter((id) => id !== "slow" && id !== "transparent" && state.enabledProfiles.has(id));
 }
 
 function toggleAutoProfile(id) {
-  if (state.autoRunning || state.mode === "slow") return;
+  if (state.autoRunning || state.mode === "slow" || state.mode === "transparent") return;
   if (state.enabledProfiles.has(id)) state.enabledProfiles.delete(id);
   else state.enabledProfiles.add(id);
   renderAutoProfiles();
@@ -274,7 +276,9 @@ function renderAutoProfiles(states = {}) {
   const enabled = profilesForAuto();
   const list = state.mode === "slow"
     ? AUTO_PROFILES.filter((profile) => profile.id === "slow")
-    : AUTO_PROFILES.filter((profile) => profile.id !== "slow");
+    : state.mode === "transparent"
+      ? AUTO_PROFILES.filter((profile) => profile.id === "transparent")
+      : AUTO_PROFILES.filter((profile) => profile.id !== "slow" && profile.id !== "transparent");
   UI.autoProfiles.replaceChildren();
   for (const profile of list) {
     const chip = document.createElement("button");
@@ -295,36 +299,45 @@ function renderAutoProfiles(states = {}) {
 
 function reflectMode() {
   const slow = state.mode === "slow";
+  const transparent = state.mode === "transparent";
   if (UI.modeToggle) {
     for (const button of UI.modeToggle.querySelectorAll("[data-mode]")) {
       button.setAttribute("aria-pressed", String(button.dataset.mode === state.mode));
     }
   }
-  if (UI.autoTitle) UI.autoTitle.textContent = slow ? "Tester le ralenti 50%" : "Tester la dégradation";
+  if (UI.autoTitle) UI.autoTitle.textContent = slow ? "Tester le ralenti 50%" : transparent ? "Tester le mode transparent" : "Tester la dégradation";
   if (UI.autoSub) {
     UI.autoSub.textContent = slow
       ? "Ralentissement 50 % · qualité conservée · Suno après acceptation"
-      : "Aggressive → Instrumental · Suno ne s'ouvre qu'après acceptation";
+      : transparent
+        ? "Pitch et tempo intacts · Suno ne s'ouvre qu'après acceptation"
+        : "Aggressive → Instrumental · Suno ne s'ouvre qu'après acceptation";
   }
   if (UI.modeHint) {
     UI.modeHint.textContent = slow
       ? "Ralentit le tempo de 50 % sans dégradation de qualité ; Suno ne s'ouvre qu'après acceptation."
-      : "Teste les profils dégradés ; Suno ne s'ouvre qu'après acceptation.";
+      : transparent
+        ? "Pitch et tempo exacts ; round-trip MP3 256 kbps et micro-dither. Suno ne s'ouvre qu'après acceptation."
+        : "Teste les profils dégradés ; Suno ne s'ouvre qu'après acceptation.";
   }
   if (UI.originalLabel) UI.originalLabel.hidden = true;
   if (UI.limitHint) {
     UI.limitHint.textContent = slow
       ? "Extrait source limité à 29 s (≈58 s après ralentissement 50 %)."
-      : "Extrait limité à 53 s (≈59 s avec le profil Aggressive).";
+      : transparent
+        ? "Extrait limité à 53 s."
+        : "Extrait limité à 53 s (≈59 s avec le profil Aggressive).";
   }
   if (UI.downloadProcessed) {
     const strong = UI.downloadProcessed.querySelector("strong");
     const small = UI.downloadProcessed.querySelector("span");
-    if (strong) strong.textContent = slow ? "Télécharger le sample ralenti accepté" : "Télécharger le sample dégradé accepté";
+    if (strong) strong.textContent = slow ? "Télécharger le sample ralenti accepté" : transparent ? "Télécharger le sample transparent accepté" : "Télécharger le sample dégradé accepté";
     if (small) {
       small.textContent = slow
         ? "Le WAV ralenti 50 % exact issu du profil validé."
-        : "Le fichier exact issu du profil validé par Suno.";
+        : transparent
+          ? "Le fichier exact issu du profil transparent validé par Suno."
+          : "Le fichier exact issu du profil validé par Suno.";
     }
   }
   if (UI.sunoDownload) {
@@ -338,13 +351,15 @@ function reflectMode() {
   if (UI.note) {
     UI.note.textContent = slow
       ? "Le mode ralenti produit un WAV environ 2× plus long, sans ré-encodage MP3 ni dégradation de qualité. Suno Create ne s'ouvre qu'après acceptation, puis le sample est importé et Remix > Cover est sélectionné."
-      : "Clique sur Off/Subtle/Aggressive/Instrumental pour choisir les profils testés. Off envoie l'original ; Suno Create ne s'ouvre qu'après acceptation, puis le sample est importé et Remix > Cover est sélectionné.";
+      : transparent
+        ? "Le mode transparent conserve le pitch et le tempo exacts ; l'empreinte est brisée par un round-trip MP3 256 kbps, un pad de silence de 0,1 s et un micro-dither. Suno Create ne s'ouvre qu'après acceptation, puis le sample est importé et Remix > Cover est sélectionné."
+        : "Clique sur Off/Subtle/Aggressive/Instrumental pour choisir les profils testés. Off envoie l'original ; Suno Create ne s'ouvre qu'après acceptation, puis le sample est importé et Remix > Cover est sélectionné.";
   }
   renderAutoProfiles();
 }
 
 function setMode(mode, { persist = true, invalidate = true } = {}) {
-  const next = mode === "slow" ? "slow" : "degrade";
+  const next = mode === "slow" ? "slow" : mode === "transparent" ? "transparent" : "degrade";
   const changed = next !== state.mode;
   state.mode = next;
   if (changed && invalidate) invalidateSegment();
@@ -487,11 +502,12 @@ function downloadWinningSample() {
     const presetLabel = AUTO_PROFILES.find((profile) => profile.id === state.winningPreset)?.label || "dégradé";
     const isOriginal = state.winningPreset === "off";
     const isSlow = state.winningPreset === "slow";
-    const suffix = isOriginal ? "Off - original" : isSlow ? "Ralenti 50% - ralenti" : `${presetLabel} - dégradé`;
+    const isTransparent = state.winningPreset === "transparent";
+    const suffix = isOriginal ? "Off - original" : isSlow ? "Ralenti 50% - ralenti" : isTransparent ? "Transparent - transparent" : `${presetLabel} - dégradé`;
     downloadAudio(bytes, `${base} - ${suffix}.${ext}`, mime);
     setStatus(
       UI.sunoStatus,
-      `Sample ${isOriginal ? "original (Off)" : isSlow ? "ralenti 50 %" : `dégradé (${presetLabel})`} téléchargé.`,
+      `Sample ${isOriginal ? "original (Off)" : isSlow ? "ralenti 50 %" : isTransparent ? "transparent" : `dégradé (${presetLabel})`} téléchargé.`,
       "ok"
     );
   } catch (error) {
@@ -529,7 +545,9 @@ async function afterAutoSuccess(message) {
       ? "Sample original (Off) accepté. Import dans Suno Create en cours…"
       : preset === "slow"
         ? "Sample ralenti 50 % accepté. Import dans Suno Create en cours…"
-        : `Sample dégradé (${presetLabel}) accepté. Import dans Suno Create en cours…`,
+        : preset === "transparent"
+          ? "Sample transparent accepté. Import dans Suno Create en cours…"
+          : `Sample dégradé (${presetLabel}) accepté. Import dans Suno Create en cours…`,
     "working"
   );
   const imported = await importAudioIntoSuno(file).catch(() => null);
@@ -1861,7 +1879,7 @@ async function restoreDraft() {
     }
     if (Array.isArray(ytcoverDraft.enabledProfiles)) {
       const valid = ytcoverDraft.enabledProfiles.filter((id) =>
-        AUTO_PROFILES.some((profile) => profile.id === id && id !== "slow")
+        AUTO_PROFILES.some((profile) => profile.id === id && id !== "slow" && id !== "transparent")
       );
       if (valid.length && ytcoverDraft.styleFidelity !== undefined) {
         state.enabledProfiles = new Set(valid);
@@ -3242,7 +3260,9 @@ async function runAutoWorkflow() {
   setAutoStatus(
     state.mode === "slow"
       ? "Test du ralenti 50 %, sans ouvrir Suno avant acceptation…"
-      : "Test de la dégradation, sans ouvrir Suno avant acceptation…",
+      : state.mode === "transparent"
+        ? "Test du mode transparent, sans ouvrir Suno avant acceptation…"
+        : "Test de la dégradation, sans ouvrir Suno avant acceptation…",
     "working"
   );
   setStepState(UI.sunoState, "Auto", "working");
