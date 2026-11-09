@@ -1,0 +1,492 @@
+<html lang="fr"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cover Studio — Creator Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ytcover.css">
+  </head>
+  <body class="ytbody">
+    <header class="ythead">
+      <div class="ytbrand">
+        <img src="icons/icon.svg" width="38" height="38" alt="">
+        <div class="ytbrand-text">
+          <span class="ytbrand-kicker">Creator Toolkit</span>
+          <h1>Cover Studio</h1>
+        </div>
+        <span class="ytbadge">YouTube → Suno</span>
+      </div>
+      <div class="ythead-actions">
+        <a href="https://suno.com/create" class="ytlink" target="_blank" rel="noreferrer">Ouvrir Suno</a>
+      </div>
+    </header>
+
+    <main class="ytmain">
+      <section class="ytintro">
+        <p>
+          Charge une vidéo ou un morceau, choisis ton style et ta voix, prépare les paroles
+          et les accords, puis valide l'extrait juste avant l'upload dégradé et la cover Suno,
+          depuis cette fenêtre.
+        </p>
+      </section>
+
+      <!-- ÉTAPE 1 -->
+      <section class="ytcard ytstep" id="step-source">
+        <div class="ytstep-head">
+          <span class="ytstep-num">1</span>
+          <div>
+            <h2 id="source-heading">Source YouTube</h2>
+            <p>Charge une vidéo YouTube ou importe un fichier audio. La capture et le traitement restent locaux.</p>
+          </div>
+          <span class="ytstep-state" id="source-state">En attente</span>
+        </div>
+
+        <div class="ytsource-row">
+          <div class="ytfield ytfield-grow">
+            <label for="yt-url">URL de la vidéo</label>
+            <input id="yt-url" type="url" placeholder="https://www.youtube.com/watch?v=…" autocomplete="off" spellcheck="false">
+          </div>
+          <button id="yt-load" class="button button-primary" type="button">Charger la vidéo</button>
+          <button id="yt-local" class="button button-quiet" type="button">Importer un fichier</button>
+          <button id="yt-clear-cache" class="button button-quiet" type="button">Supprimer le cache</button>
+          <input id="yt-file" type="file" accept="audio/*,video/mp4,video/webm" hidden="">
+        </div>
+
+        <div class="ytvideo-card" id="yt-video-card" hidden="">
+          <img id="yt-thumb" alt="" width="168" height="94">
+          <div class="ytvideo-meta">
+            <p id="yt-video-title" class="ytvideo-title">—</p>
+            <p id="yt-video-sub" class="ytvideo-sub">—</p>
+          </div>
+          <div class="ytvideo-actions">
+            <button id="yt-play" class="button button-quiet" type="button">Onglet YouTube</button>
+            <button id="yt-analyze" class="button button-primary" type="button">
+              Scanner
+            </button>
+          </div>
+        </div>
+
+        <div class="ytanalyze-row" id="yt-analyze-row" hidden="">
+          <div class="ytfield">
+            <label for="yt-sample-start">Début de l'échantillon (min:sec)</label>
+            <input id="yt-sample-start" type="text" inputmode="numeric" placeholder="0:00" value="0:00" autocomplete="off" spellcheck="false">
+          </div>
+          <button id="yt-analyze-2" class="button button-primary" type="button">
+            Scanner la vidéo
+          </button>
+          <span class="ythint">La vidéo est jouée en sourdine pendant la capture. L'échantillon sert à détecter le tempo et à proposer un passage.</span>
+        </div>
+
+
+
+        <div class="ytprogress" id="yt-progress" hidden="">
+          <div class="ytprogress-bar"><span id="yt-progress-fill"></span></div>
+          <p id="yt-progress-label">—</p>
+        </div>
+        <p class="ytstatus" id="yt-source-status" role="status">Colle une URL YouTube puis clique sur « Charger la vidéo ». Tu peux aussi importer un fichier audio local.</p>
+      </section>
+
+      <!-- ÉTAPE 2 : STYLE & VOIX -->
+      <section class="ytcard ytstep" id="step-style">
+        <div class="ytstep-head">
+          <span class="ytstep-num">2</span>
+          <div>
+            <h2>Style &amp; voix</h2>
+            <p>Décris le style, génère un prompt, choisis le type de voix et ses variantes.</p>
+          </div>
+          <span class="ytstep-state" id="style-state">Brouillon</span>
+        </div>
+
+        <div class="ytstyle-grid">
+          <div class="ytfield">
+            <label for="yt-style-input">Style souhaité</label>
+            <input id="yt-style-input" type="text" placeholder="ex. dark synthwave, 80s, mélancolique" autocomplete="off">
+          </div>
+          <button id="yt-style-generate" class="button button-primary" type="button">Générer le prompt</button>
+          <button id="yt-style-copy" class="button button-quiet" type="button">Copier</button>
+        </div>
+        <label class="ytswitch ytfidelity">
+          <input id="yt-style-fidelity" type="checkbox" checked />
+          <span>Cover proche de l'original</span>
+        </label>
+        <p class="ythint">
+          Conserve la mélodie, le phrasé et les accords ; le style choisi devient une direction de production.
+          Pour la fidélité, utilise Off ou Subtle (pitch et tempo intacts) ; Aggressive transpose et ralentit. Suno refuse les noms d'artistes : le prompt reste neutre (« uploaded song »).
+        </p>
+
+        <div class="ytmusic-row">
+          <div class="ytfield">
+            <label for="yt-key">Tonalité</label>
+            <input id="yt-key" type="text" placeholder="ex. F# minor" autocomplete="off" />
+          </div>
+          <div class="ytfield">
+            <label for="yt-chords">Progression d'accords</label>
+            <input id="yt-chords" type="text" placeholder="ex. F#m – G#m7 – A – B" autocomplete="off" />
+          </div>
+          <button id="yt-music-info" class="button button-quiet" type="button">Chercher tonalité &amp; accords</button>
+        </div>
+        <p class="ytstatus" id="yt-music-status" role="status"></p>
+
+        <textarea id="yt-style-prompt" class="ytstyle-prompt" placeholder="Le prompt de style apparaîtra ici. Il sera copié et proposé à Suno."></textarea>
+
+        <div class="ytvoice-row">
+          <span class="ytvoice-label">Voix</span>
+          <div class="ytvoice-toggle" id="yt-voice-toggle">
+            <button type="button" data-voice="male" aria-pressed="false">Male</button>
+            <button type="button" data-voice="female" aria-pressed="true">Female</button>
+          </div>
+          <button id="yt-voice-suggest" class="button button-quiet" type="button">Suggérer des variantes</button>
+        </div>
+        <div class="ytvariants" id="yt-voice-variants" aria-label="Variantes de voix"><button type="button" class="ytvariant" data-variant="smooth" data-selected="false">smooth</button><button type="button" class="ytvariant" data-variant="raspy" data-selected="false">raspy</button><button type="button" class="ytvariant" data-variant="deep" data-selected="false">deep</button><button type="button" class="ytvariant" data-variant="breathy" data-selected="false">breathy</button><button type="button" class="ytvariant" data-variant="airy" data-selected="false">airy</button><button type="button" class="ytvariant" data-variant="powerful" data-selected="false">powerful</button><button type="button" class="ytvariant" data-variant="soft" data-selected="false">soft</button><button type="button" class="ytvariant" data-variant="gritty" data-selected="false">gritty</button><button type="button" class="ytvariant" data-variant="husky" data-selected="false">husky</button><button type="button" class="ytvariant" data-variant="warm" data-selected="false">warm</button><button type="button" class="ytvariant" data-variant="bright" data-selected="false">bright</button><button type="button" class="ytvariant" data-variant="soulful" data-selected="false">soulful</button><button type="button" class="ytvariant" data-variant="smoky" data-selected="false">smoky</button><button type="button" class="ytvariant" data-variant="falsetto" data-selected="false">falsetto</button><button type="button" class="ytvariant" data-variant="baritone" data-selected="false">baritone</button><button type="button" class="ytvariant" data-variant="alto" data-selected="false">alto</button><button type="button" class="ytvariant" data-variant="soprano" data-selected="false">soprano</button><button type="button" class="ytvariant" data-variant="whisper" data-selected="false">whisper</button></div>
+        <div class="ytvariants ytvariants-suggestions" id="yt-voice-suggestions" aria-label="Suggestions de variantes"></div>
+        <p class="ytstatus" id="yt-style-status" role="status"></p>
+        <div class="ytactions">
+          <button id="yt-scan-2" class="button button-primary" type="button">Scanner la vidéo / le morceau</button>
+          <span class="ythint">L'analyse du tempo et le découpage apparaissent dans le bloc Extrait & validation, juste avant l'envoi vers Suno.</span>
+        </div>
+      </section>
+
+      <!-- PAROLES & PHONÉTIQUE -->
+      <section class="ytcard ytstep" id="step-lyrics">
+        <div class="ytstep-head ytstep-head-cont">
+          <div>
+            <h2>Paroles &amp; phonétique</h2>
+            <p>Genius d'abord, puis LRCLIB en secours. La structure est détectée ou déduite.</p>
+          </div>
+          <span class="ytstep-state" id="lyrics-state">En attente</span>
+        </div>
+
+        <div class="ytlyrics-search">
+          <div class="ytfield">
+            <label for="ly-title">Titre</label>
+            <input id="ly-title" type="text" placeholder="Titre de la chanson" autocomplete="off">
+          </div>
+          <div class="ytfield">
+            <label for="ly-artist">Artiste</label>
+            <input id="ly-artist" type="text" placeholder="Artiste" autocomplete="off">
+          </div>
+          <button id="ly-search" class="button button-primary" type="button">Chercher les paroles</button>
+        </div>
+
+        <div class="ytresults" id="ly-results" hidden="">
+          <div class="ytresults-head">
+            <strong>Résultats Genius</strong>
+            <button id="ly-results-close" class="yticon-button" type="button" aria-label="Fermer">×</button>
+          </div>
+          <ul id="ly-results-list"></ul>
+        </div>
+
+        <div class="ytlyrics-grid">
+          <div class="ytlyrics-col">
+            <div class="ytlyrics-head">
+              <h3>Paroles originales</h3>
+              <span id="ly-source" class="ytpill">—</span>
+            </div>
+            <textarea id="ly-original" spellcheck="false" placeholder="Colle les paroles ici, ou utilise la recherche ci-dessus."></textarea>
+            <div class="ytlyrics-tools">
+              <button id="ly-structure" class="button button-quiet" type="button" disabled="">Structurer</button>
+              <button id="ly-phonetic" class="button button-primary" type="button" disabled="">Phonétique locale</button>
+              <button id="ly-ai" class="button button-quiet" type="button" disabled="">Phonétique IA</button>
+            </div>
+          </div>
+          <div class="ytlyrics-col">
+            <div class="ytlyrics-head">
+              <h3>Phonétique simplifiée</h3>
+              <span id="ly-phon-status" class="ytpill">—</span>
+            </div>
+            <textarea id="ly-phonetic-text" spellcheck="false" placeholder="Le résultat apparaîtra ici : syllabes séparées par des tirets, syllabes accentuées en MAJUSCULES."></textarea>
+            <div class="ytlyrics-tools">
+              <button id="ly-phonetic-chords" class="button button-primary" type="button">Phonétique + accords</button>
+              <button id="ly-copy-phonetic" class="button button-primary" type="button" disabled="">Copier la phonétique</button>
+              <button id="ly-suno-fill" class="button button-quiet" type="button" disabled="">Remplir Suno</button>
+            </div>
+            <div class="ytsections" id="ly-sections"></div>
+          </div>
+        </div>
+        <div class="ytchorded" hidden>
+          <div class="ytlyrics-head">
+            <h3>Paroles avec accords</h3>
+            <span id="ly-chorded-status" class="ytpill">—</span>
+          </div>
+          <div class="ytchorded-controls">
+            <label class="ytfield">
+              <span>Base</span>
+              <select id="ly-chords-base">
+                <option value="original">Paroles originales</option>
+                <option value="phonetic">Phonétique</option>
+              </select>
+            </label>
+            <label class="ytswitch">
+              <input id="ly-use-chords" type="checkbox" checked />
+              <span>Utiliser pour Suno</span>
+            </label>
+          </div>
+          <textarea id="ly-chorded" spellcheck="false" placeholder="[Intro]&#10;[F#m - G#m7 - A - B]&#10;&#10;[Verse 1]&#10;[F#m] First line…"></textarea>
+          <div class="ytlyrics-tools">
+            <button id="ly-build-chords" class="button button-primary" type="button">Générer paroles + accords</button>
+            <button id="ly-copy-chords" class="button button-quiet" type="button">Copier</button>
+            <button id="ly-suno-chords" class="button button-quiet" type="button">Remplir Suno</button>
+          </div>
+        </div>
+
+        <p class="ytstatus" id="ly-status" role="status"></p>
+      </section>
+
+      <section class="ytcard ytstep" id="step-chords">
+        <div class="ytstep-head ytstep-head-cont">
+          <div>
+            <h2>Progression par phrase</h2>
+            <p>Accords de chaque ligne, à partir des sections Hooktheory. Répartition indicative, éditable après copie.</p>
+          </div>
+          <span class="ytstep-state" id="chords-state">En attente</span>
+        </div>
+        <div id="yt-chord-grid" class="ytchord-grid"></div>
+        <p class="ytstatus" id="yt-chord-status" role="status"></p>
+      </section>
+
+      <section class="ytcard ytstep" id="step-stems">
+        <div class="ytstep-head ytstep-head-cont">
+          <div>
+            <h2>Stems</h2>
+            <p>Sépare le morceau généré importé (ou l'extrait source) en instrumental + acapella, ou tous les stems Demucs (drums, bass, other, vocals).</p>
+          </div>
+          <span class="ytstep-state" id="stems-state">En attente</span>
+        </div>
+        <div class="ytstems-source">
+          <label class="ytfield">
+            <span>Source des stems</span>
+            <select id="yt-stem-source">
+              <option value="generated">Morceau généré importé</option>
+              <option value="extract">Extrait source</option>
+            </select>
+          </label>
+          <button id="yt-stem-import" class="button button-quiet" type="button">Importer le morceau généré</button>
+          <input id="yt-stem-file" type="file" accept="audio/*" hidden />
+          <span id="yt-stem-file-label" class="ythint"></span>
+        </div>
+
+        <div class="ytstems-suno">
+          <button id="yt-suno-list" class="button button-quiet" type="button">Récupérer mes derniers morceaux Suno</button>
+          <select id="yt-suno-clip" hidden></select>
+          <button id="yt-suno-use" class="button button-quiet" type="button" hidden>Utiliser ce morceau</button>
+        </div>
+        <p class="ytstatus" id="yt-suno-status" role="status"></p>
+
+        <div class="ytstems-controls">
+          <label class="ytfield ytstems-scope">
+            <span>Stems à exporter</span>
+            <select id="yt-stem-scope">
+              <option value="two">Instrumental + acapella</option>
+              <option value="all">Tous les stems</option>
+            </select>
+          </label>
+          <button id="yt-stems-run" class="button button-primary" type="button">Séparer les stems</button>
+          <button id="yt-stems-download" class="button button-quiet" type="button" disabled>Télécharger le ZIP</button>
+        </div>
+        <p class="ytstatus" id="yt-stems-status" role="status"></p>
+        <div id="yt-stems-list" class="ytstems-list"></div>
+      </section>
+
+      <!-- EXTRAIT & VALIDATION : dernier contrôle avant Suno -->
+      <section class="ytcard ytstep" id="step-cut">
+        <div class="ytstep-head">
+          <span class="ytstep-num">3</span>
+          <div>
+            <h2>Extrait &amp; validation</h2>
+            <p>Vérifie le découpage, écoute le passage, puis valide l'extrait juste avant l'envoi vers Suno.</p>
+          </div>
+          <span class="ytstep-state" id="cut-state">En attente</span>
+        </div>
+
+        <div class="ytgrid" id="yt-editor" hidden="">
+          <div class="ytcard ytsubcard">
+            <div class="ytsubhead">
+              <h3>Tempo &amp; passage</h3>
+              <span id="yt-confidence" class="ytpill">—</span>
+            </div>
+            <div class="yttempo">
+              <div class="yttempo-value">
+                <strong id="yt-bpm">—</strong>
+                <span>BPM</span>
+              </div>
+              <div class="yttempo-info">
+                <p id="yt-beat-info">Charge une vidéo puis lance l'analyse.</p>
+                <p class="ythint" id="yt-tempo-hint"></p>
+              </div>
+            </div>
+
+            <div class="ytcontrols">
+              <label class="ytcontrol">
+                <span>Position dans l'échantillon</span>
+                <input id="yt-start" type="range" min="0" max="30" step="0.05" value="0">
+                <output id="yt-start-out">0:00.00</output>
+              </label>
+              <div class="ytcontrol-row">
+                <label class="ytcontrol ytcontrol-small">
+                  <span>Mesures</span>
+                  <select id="yt-bars">
+                    <option value="4">4 mesures</option>
+                    <option value="8" selected="">8 mesures</option>
+                    <option value="16">16 mesures</option>
+                    <option value="32">32 mesures</option>
+                  </select>
+                </label>
+                <label class="ytcontrol ytcontrol-small">
+                  <span>BPM manuel</span>
+                  <input id="yt-bpm-input" type="number" min="40" max="220" step="0.1">
+                </label>
+                <div class="ytlength">
+                  <span>Longueur</span>
+                  <strong id="yt-length">—</strong>
+                </div>
+                <button id="yt-snap" class="button button-quiet" type="button">Aligner au beat</button>
+              </div>
+              <p class="ythint" id="yt-segment-range">—</p>
+              <p class="ythint" id="yt-limit-hint">Extrait limité à 53 s (≈59 s avec le profil Aggressive).</p>
+            </div>
+
+            <div class="ytactions">
+              <button id="yt-capture" class="button button-primary" type="button" disabled="">
+                Capturer ce passage
+              </button>
+              <button id="yt-download" class="button button-quiet" type="button" disabled="">
+                Télécharger l'extrait original
+              </button>
+              <span id="yt-segment-status" class="ytstatus" role="status"></span>
+            </div>
+          </div>
+
+          <div class="ytcard ytsubcard ytwave-card">
+            <div class="ytsubhead">
+              <h3>Échantillon capturé</h3>
+              <span id="yt-sample-meta" class="ytpill">—</span>
+            </div>
+            <canvas id="yt-wave" width="920" height="190"></canvas>
+            <div class="ytwave-legend">
+              <span class="ytlegend-swatch"></span>
+              <span>Passage sélectionné</span>
+              <span class="ytwave-time" id="yt-wave-time">—</span>
+            </div>
+            <audio id="yt-audio" controls="" preload="metadata" hidden=""></audio>
+            <div class="ytwave-actions">
+              <button id="yt-preview" class="button button-quiet" type="button" disabled="">
+                Écouter le passage
+              </button>
+              <button id="yt-stop" class="button button-quiet" type="button" disabled="">Stop</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ytmode-row">
+          <span class="ytvoice-label">Mode</span>
+          <div class="ytvoice-toggle" id="yt-mode-toggle" role="group" aria-label="Mode de traitement">
+            <button type="button" data-mode="degrade" aria-pressed="true">Dégrader</button>
+            <button type="button" data-mode="slow" aria-pressed="false">Ralentir 50%</button>
+          </div>
+
+        <div class="ytvalidate-row">
+          <button id="yt-validate" class="button button-primary" type="button" disabled="">
+            Accepter le découpage et valider l'extrait
+          </button>
+          <span id="yt-validate-status" class="ytstatus" role="status"></span>
+        </div>
+      </section>
+
+      <section class="ytcard ytstep" id="step-suno">
+        <div class="ytstep-head ytstep-head-cont">
+          <div>
+            <h2>Envoyer vers Suno</h2>
+            <p>
+              Le passage est prêt pour l'upload ; les paroles phonétiques peuvent être injectées
+              directement dans l'éditeur Suno Create.
+            </p>
+          </div>
+          <span class="ytstep-state" id="suno-state">En attente</span>
+        </div>
+
+
+          <span class="ythint" id="yt-mode-hint">Teste les profils dégradés ; Suno ne s'ouvre qu'après acceptation.</span>
+        </div>
+
+        <div class="ytname-row">
+          <label class="ytswitch" for="yt-discreet">
+            <input id="yt-discreet" type="checkbox" checked="">
+            <span>Nom discret pour Suno</span>
+          </label>
+          <input id="yt-name" type="text" maxlength="80" placeholder="Nom du morceau" autocomplete="off">
+          <button id="yt-name-regen" class="button button-quiet" type="button">Régénérer</button>
+        </div>
+        <p class="ythint">
+          Le titre et l'artiste d'origine ne sont pas repris dans le nom du fichier envoyé à Suno.
+          L'audio et les paroles restent inchangés.
+        </p>
+
+        <label class="ytswitch ytoriginal-toggle" id="yt-original-label" for="yt-allow-original">
+          <input id="yt-allow-original" type="checkbox">
+          <span>Tenter aussi l'original (non dégradé) en dernier recours</span>
+        </label>
+
+        <button id="suno-auto" class="ytauto-button" type="button" disabled="">
+          <span class="ytauto-glyph" aria-hidden="true">⚡</span>
+          <span class="ytauto-copy">
+            <strong id="yt-auto-title">Tester la dégradation</strong>
+            <small id="yt-auto-sub">
+              Subtle → Aggressive → Instrumental · Suno ne s'ouvre qu'après acceptation
+            </small>
+          </span>
+          <span class="ytauto-arrow" aria-hidden="true">→</span>
+        </button>
+        <div class="ytauto-profiles" id="suno-auto-profiles" aria-live="polite"><span class="ytauto-profile" data-profile="off" data-state="skip">Off</span><span class="ytauto-profile" data-profile="subtle" data-state="pending">Subtle</span><span class="ytauto-profile" data-profile="aggressive" data-state="pending">Aggressive</span><span class="ytauto-profile" data-profile="instrumental" data-state="pending">Instrumental</span></div>
+        <p class="ytstatus" id="suno-auto-status" role="status"></p>
+
+        <div class="yttested-row">
+          <label for="suno-tested-select">Samples testés</label>
+          <select id="suno-tested-select" disabled="">
+            <option value="">Aucun sample testé pour l'instant</option>
+          </select>
+          <button id="suno-download-tested" class="button button-quiet" type="button" disabled="">
+            Télécharger le sample testé
+          </button>
+        </div>
+
+        <div class="ytsuno-grid">
+          <button id="suno-open" class="ytsuno-card" type="button">
+            <strong>Ouvrir Suno Create</strong>
+            <span>Ouvre l'onglet de création dans le même profil Chrome.</span>
+          </button>
+          <button id="suno-fill" class="ytsuno-card" type="button">
+            <strong>Remplir les paroles</strong>
+            <span>Injecte la phonétique dans le bloc Lyrics de Suno.</span>
+          </button>
+          <button id="suno-queue" class="ytsuno-card" type="button" disabled="" hidden="">
+            <strong>Envoyer l'audio à la file</strong>
+            <span>Ajoute le MP3 au moteur d'upload intégré.</span>
+          </button>
+          <button id="suno-download" class="ytsuno-card" type="button" disabled="">
+            <strong>Télécharger l'extrait original</strong>
+            <span>MP3 non dégradé, pour vérification ou usage manuel.</span>
+          </button>
+          <button id="suno-download-processed" class="ytsuno-card" type="button" disabled="">
+            <strong>Télécharger le sample dégradé accepté</strong>
+            <span>Le fichier exact issu du profil validé par Suno.</span>
+          </button>
+        </div>
+        <p class="ytstatus" id="suno-status" role="status"></p>
+        <p class="ytnote" id="yt-note">
+          L'automatique part sur <strong>Subtle</strong> pour garantir un sample dégradé ;
+          <strong>Off</strong> (original) n'est tenté que si tu coches la case ci-dessus.
+          Suno Create ne s'ouvre qu'après acceptation, puis le sample est importé et le mode
+          <strong>Remix &gt; Cover</strong> est sélectionné.
+        </p>
+      </section>
+    </main>
+
+    <footer class="ytfooter">
+      <span>Creator Toolkit · Cover Studio</span>
+      <span>Utilise des contenus dont tu as les droits. Le son reste local jusqu'à l'envoi vers Suno.</span>
+    </footer>
+
+    <iframe id="upload-engine" src="sidepanel.html" title="Creator Toolkit upload engine" hidden=""></iframe>
+    <script type="module" src="src/ytcover/main.js"></script>
+  
+
+</body></html>
